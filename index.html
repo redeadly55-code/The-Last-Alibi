@@ -223,6 +223,14 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 .cut.pap .cut-card{border-color:#f0ae45;box-shadow:0 0 70px rgba(240,174,69,.35)}
 .cut.pap .cut-card h2{color:#ffd27a}
 .cut.pap .cut-line{color:#f6e6c4}
+.cut.myth{background:radial-gradient(ellipse at 50% 110%,#2a1250,#05030a 62%)}
+.cut.myth .cut-lamp{background:radial-gradient(ellipse at 50% 0%,rgba(167,120,255,.38),transparent 58%)}
+.cut.myth .cut-card{border:2px solid #a78bfa;box-shadow:0 0 90px rgba(139,92,246,.45)}
+.cut.myth .cut-card h2{color:#d8c8ff}
+.cut.myth .cut-tag{color:#c4a7ff}
+.cut.myth .cut-line{color:#efe6ff}
+.dlc-item.myth{border-color:#a78bfa}
+.cut.myth .cut-line.big{font-size:1.2em;color:#d8c8ff}
 .mag{transform-origin:164px 200px;transform-box:view-box;animation:magbob 2.2s ease-in-out infinite}
 @keyframes magbob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(8deg) translateY(-3px)}}
 .spark{animation:twinkle 1.6s ease-in-out infinite}
@@ -372,7 +380,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
     <div class="field"><label>Badge colour</label><div class="opts" id="colorOpts"></div></div>
     <div class="field"><label>Headwear</label><div class="opts" id="hatOpts"></div></div>
     <div class="field"><label>Room background</label><div class="opts" id="roomOpts"></div></div>
-    <div class="row-end"><button class="btn ghost" id="replayCut" hidden>Replay Mentalist scene</button><button class="btn ghost" id="replayPap" hidden>Replay Pappeshwar scene</button><button class="btn ghost" id="replayAward" hidden>Replay award ceremony</button><button class="btn ghost" id="replayLegend" hidden>Replay Black File scene</button><button class="btn primary" id="closeSettings">Done</button></div>
+    <div class="row-end"><button class="btn ghost" id="replayCut" hidden>Replay Mentalist scene</button><button class="btn ghost" id="replayPap" hidden>Replay Pappeshwar scene</button><button class="btn ghost" id="replayAryan" hidden>Replay Aryan scene</button><button class="btn ghost" id="replayAward" hidden>Replay award ceremony</button><button class="btn ghost" id="replayLegend" hidden>Replay Black File scene</button><button class="btn primary" id="closeSettings">Done</button></div>
   </div>
 </div>
 
@@ -808,21 +816,25 @@ const STYLES = [
   {id:"bad",name:"Bad cop",desc:"Aggressive, raises pressure fast",prompt:"The detective uses an aggressive bad-cop style. Evidence-backed pressure hits harder, but empty threats make the suspect defiant and lower stress."},
   {id:"sharp",name:"Analyst",desc:"Calm, precise, catches contradictions",prompt:"The detective uses a calm analytical style. Pointing out contradictions between the suspect's own statements raises stress a lot."},
   {id:"mentalist",name:"The Mentalist",desc:"Reads you like a book. Cracks cases fast",locked:true,prompt:"The detective is a legendary Mentalist who reads body language and uses psychological suggestion: naming the suspect's hidden feelings, guilt and fears, mentioning the people they love, or calmly suggesting what really happened. These psychological moves unsettle you deeply: give them a stress_delta of 15 to 30, and even an indirect suggestion near an unknown fact should make it slip out. Evidence pressed by this detective hits very hard."},
-  {id:"pappeshwar",name:"Pappeshwar",desc:"The genius. Nobody lies to him for long",locked:true,dlc:true,prompt:"The detective is Pappeshwar, a legendary genius detective with outrageous confidence. He makes lightning-fast deductions, tells you what you did before you can say it, and pounces on the tiniest slip. His deductions rattle you badly: give them a stress_delta of 15 to 30, and whenever he deduces anywhere near an unknown fact, let it slip. Let some nervous awe show at how much he seems to know. Evidence pressed by him hits extremely hard."}
+  {id:"pappeshwar",name:"Pappeshwar",desc:"The genius. Nobody lies to him for long",locked:true,dlc:true,prompt:"The detective is Pappeshwar, a legendary genius detective with outrageous confidence. He makes lightning-fast deductions, tells you what you did before you can say it, and pounces on the tiniest slip. His deductions rattle you badly: give them a stress_delta of 15 to 30, and whenever he deduces anywhere near an unknown fact, let it slip. Let some nervous awe show at how much he seems to know. Evidence pressed by him hits extremely hard."},
+  {id:"aryan",name:"Aryan",desc:"Mythic. The larper. The room goes quiet",locked:true,dlc:true,mythic:true,prompt:"The detective is Aryan, a mythic detective whose presence alone makes the room go silent. He commits completely to every bit, stares you down without blinking and treats every answer like he already wrote the script. Everything he says rattles you badly: give his questions a stress_delta of 18 to 32, and whenever he gets anywhere near an unknown fact, let it slip. Let it show that you are completely unsettled by him. Evidence pressed by him hits harder than anything."}
 ];
 const PSYCH = /you('| a)?re (scared|afraid|hiding|lying|nervous|guilty|ashamed|tired|protecting|carrying)|i can see|i can tell|i notice|your (eyes|hands|voice|face|breathing)|it'?s okay|i understand|you want to tell|weight|relief|sleep at night|let it go|imagine|you feel|guilt|ashamed|deep down|who are you protecting|you didn'?t mean|forgive|look at me|tell me the truth|you know what happened|you'?re not a bad person|regret/;
 const MENTALIST_HINTS = ["I notice you paused before answering. What were you deciding not to say?","Who are you protecting?","I can tell this has been on your mind. When did it start?","You didn't mean for it to go this far, did you?"];
 function hardCases(){ return CASES.filter(c=>c.diff===3); }
-function styleUnlocked(s){ if(!s.locked) return true; return s.dlc ? (pappeshwarUnlocked() && !papHidden()) : mentalistUnlocked(); }
+function styleUnlocked(s){ if(!s.locked) return true; if(s.id==="aryan") return aryanUnlocked(); return s.dlc ? (pappeshwarUnlocked() && !papHidden()) : mentalistUnlocked(); }
 function mentalistUnlocked(){ return !!store.get("r7.mentalist",false); }
 function pappeshwarUnlocked(){ return !!store.get("r7.pappeshwar",false); }
+function aryanUnlocked(){ return !!store.get("r7.aryan",false); }
 function papHidden(){ return !!store.get("r7.papHidden",false); }
 function maxQ(){ return (G && G.c.maxQ) || MAXQ; }
 function leadOpen(h){ return !h.after || G.known.has(h.after); }
 const PAP_HINTS = ["There's a hole in your story. Where exactly were you during that gap?","You slipped just now. Why did you mention that detail?","It's obvious you rehearsed this. Which part did you change?","I already know part of what happened. Tell me the rest."];
 const PAP_RE = /elementary|i (already )?know|i deduce|deduc|obvious|genius|hole in your story|you slipped|gotcha|admit it|i see through|nice try/;
 const DLC_CODE = "cGFwcHVnZW5pdXMyMzQ=";
-const PAP_SHOW = "c2hvd3BhcHM=";           // un-hides Pappeshwar
+const PAP_SHOW = "c2hvd3BhcHM=";
+const MYTH_CODE = "Z29vbmVzaF9pcnJhbmtpMjM=";
+const ARYAN_HINTS = ["Walk me through it again. Slowly.","Interesting. Now tell me the version you didn't rehearse.","Look at me. Which part of that was true?","Who else knows what you did?"];           // un-hides Pappeshwar
 const COLORS = ["#f0ae45","#de5a3f","#6fb38a","#6b9be0","#b98ae0","#e6e1d6"];
 const HATS = [{id:"fedora",name:"Fedora"},{id:"cap",name:"Peaked cap"},{id:"none",name:"No hat"}];
 const ROOMS = [
@@ -846,7 +858,7 @@ const PARTNERS = STYLES.filter(x=>x.locked);
 function partnerOn(){ const p=STYLES.find(x=>x.id===settings.style); return p && p.locked ? p : null; }
 function equip(id){ const cur=STYLES.find(x=>x.id===settings.style); if(cur && !cur.locked) settings.base=cur.id; settings.style=id; applySettings(); }
 function unequip(){ settings.style = settings.base || "good"; applySettings(); }
-function partnerIcon(id,size){ return id==="pappeshwar" ? pappeshwarSVG(size) : mentalistSVG(size); }
+function partnerIcon(id,size){ return id==="aryan" ? aryanSVG(size) : id==="pappeshwar" ? pappeshwarSVG(size) : mentalistSVG(size); }
 function awarded(){ return !!store.get("r7.award",false); }
 
 // ---------- dom ----------
@@ -938,7 +950,7 @@ function renderAttached(){
   });
 }
 function renderHints(){
-  const h= settings.style==="pappeshwar" ? PAP_HINTS : settings.style==="mentalist" ? MENTALIST_HINTS : ["Walk me through your night.","Who else had access?","What do you do in your free time?","Why would someone lie about you?"];
+  const h= settings.style==="aryan" ? ARYAN_HINTS : settings.style==="pappeshwar" ? PAP_HINTS : settings.style==="mentalist" ? MENTALIST_HINTS : ["Walk me through your night.","Who else had access?","What do you do in your free time?","Why would someone lie about you?"];
   $("hints").innerHTML="";
   h.forEach(t=>{const b=document.createElement("button");b.type="button";b.textContent=t;b.onclick=()=>{$("q").value=t;$("q").focus();};$("hints").appendChild(b);});
 }
@@ -1221,6 +1233,7 @@ function offlineTurn(q, presentedNow){
     if(imm){ const combo=hit.filter(x=>x.key && !G.presented.has(x.id)).length; if(combo>1) delta+=14*(combo-1); }
     if(style==="mentalist") delta=Math.round(delta*1.5);
     if(style==="pappeshwar") delta=Math.round(delta*1.6);
+    if(style==="aryan") delta=Math.round(delta*1.8);
     reply = first ? c.denials[cl.id] : "*jaw tightens* I already explained that. " + c.denials[cl.id].replace(/^\*[^*]+\*\s*/,"");
     hit.forEach(x=>G.presented.add(x.id));
   }
@@ -1249,6 +1262,10 @@ function offlineTurn(q, presentedNow){
       delta+=14;
       if(!reveal){ const h=c.hidden.find(x=>!G.known.has(x.id)&&leadOpen(x)); if(h){ reveal=h.id; reply="*blinks, rattled* How did you… "+c.denials[h.id].replace(/^\*[^*]+\*\s*/,""); } }
     }
+  }
+  if(style==="aryan"){
+    delta+=7;
+    if(!reveal && G.asked%2===0){ const h=c.hidden.find(x=>!G.known.has(x.id)&&leadOpen(x)); if(h){ reveal=h.id; reply="*the room goes quiet* "+c.denials[h.id].replace(/^\*[^*]+\*\s*/,""); } }
   }
   if(c.grit) delta=Math.round(delta*c.grit);
   return {reply, stress_delta:delta, reveal, confess:false};
@@ -1484,6 +1501,50 @@ const MENTALIST_SCENE = {
     {t:"\"They call me the Mentalist. Shall we?\""}
   ]
 };
+function aryanSVG(size){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="17" fill="#8b5cf6"/><path d="M6 36 Q18 25 30 36Z" fill="#f4f4f2"/><path d="M15 26 L18 32 L21 26" fill="none" stroke="#1d2433" stroke-width="1.2"/><rect x="16.2" y="21" width="3.6" height="4" fill="#9a6a48"/><ellipse cx="18" cy="15.5" rx="6.3" ry="7.2" fill="#a8734f"/><path d="M11.4 15 Q10.6 6.5 18 7 Q25.6 6.6 24.6 14.6 Q23 10.6 19.5 11.4 Q16.4 9.6 13.6 12 Q12.2 12.8 11.4 15Z" fill="#141210"/><circle cx="15.6" cy="16.2" r="0.9" fill="#1b1b1b"/><circle cx="20.4" cy="16.2" r="0.9" fill="#1b1b1b"/><path d="M16.2 20.4 L19.8 20.4" stroke="#5a2f22" stroke-width="0.9" stroke-linecap="round"/></svg>`;
+}
+function aryanFigure(){
+  return `<svg viewBox="0 0 220 250" role="img" aria-label="A serious teenage detective with swept black hair, a white school shirt and a dark lanyard, sitting behind a white laptop">
+    <ellipse cx="110" cy="244" rx="92" ry="8" fill="#000" opacity=".55"/>
+    <path d="M30 236 Q34 160 110 150 Q186 160 190 236Z" fill="#f4f4f2"/>
+    <path d="M110 150 L92 150 L100 172 L110 160Z" fill="#e6e6e2" stroke="#cfcfca" stroke-width="1.5"/>
+    <path d="M110 150 L128 150 L120 172 L110 160Z" fill="#e6e6e2" stroke="#cfcfca" stroke-width="1.5"/>
+    <path d="M92 150 L106 200 M128 150 L114 200" stroke="#1d2433" stroke-width="4" fill="none"/>
+    <rect x="96" y="124" width="28" height="30" rx="4" fill="#9a6a48"/>
+    <ellipse cx="110" cy="96" rx="36" ry="42" fill="#a8734f"/>
+    <ellipse cx="74" cy="100" rx="6" ry="10" fill="#9a6a48"/><ellipse cx="146" cy="100" rx="6" ry="10" fill="#9a6a48"/>
+    <path d="M72 96 Q64 40 112 40 Q160 38 150 92 Q146 70 128 66 Q120 74 102 68 Q92 78 82 76 Q76 84 72 96Z" fill="#141210"/>
+    <path d="M86 60 Q100 50 118 58 Q108 60 98 72Z" fill="#26211c" opacity=".7"/>
+    <path d="M86 88 Q96 84 104 88" fill="none" stroke="#141210" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M116 88 Q124 84 134 88" fill="none" stroke="#141210" stroke-width="3.5" stroke-linecap="round"/>
+    <ellipse cx="96" cy="100" rx="6" ry="3.6" fill="#fff"/><ellipse cx="124" cy="100" rx="6" ry="3.6" fill="#fff"/>
+    <circle cx="96" cy="101" r="3" fill="#1b1410"/><circle cx="124" cy="101" r="3" fill="#1b1410"/>
+    <path d="M90 97 Q96 95 102 97 M118 97 Q124 95 130 97" stroke="#7a4f36" stroke-width="2" fill="none"/>
+    <path d="M108 104 Q106 114 110 116 Q114 116 113 114" fill="none" stroke="#7d5038" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M100 124 Q110 126 120 124" fill="none" stroke="#5a2f22" stroke-width="2.6" stroke-linecap="round"/>
+    <g class="lap">
+      <path d="M150 196 L198 190 L200 206 L152 212Z" fill="#c9a77c"/>
+      <path d="M40 176 L158 176 L156 236 L44 236Z" fill="#ececea" stroke="#c9c9c5" stroke-width="2"/>
+      <rect x="48" y="182" width="22" height="10" rx="1" fill="#fafaf8" stroke="#bdbdb8" stroke-width="1"/>
+      <circle cx="100" cy="206" r="7" fill="none" stroke="#c9c9c5" stroke-width="2"/>
+    </g>
+    <path class="spark" d="M34 50 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#c4a7ff"/>
+    <path class="spark" d="M188 70 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill="#c4a7ff"/>
+    <path class="spark" d="M178 140 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#ffd27a"/>
+  </svg>`;
+}
+const ARYAN_SCENE = {
+  style:"aryan", cls:"myth", label:"A mythic detective arrives", figure:aryanFigure,
+  tag:"Mythic character unlocked", title:"Aryan",
+  desc:"Mythic tier. Every question lands like a verdict, hidden leads spill out on their own, and suspects crack faster than with anyone else.",
+  btn:"Partner with Aryan",
+  lines:[
+    {t:"The larper enters,", fig:true},
+    {t:"He larps so hard the room goes quiet,"},
+    {t:"This character is only entitled to one person, that's you, Aryan.", big:true}
+  ]
+};
 const PAP_SCENE = {
   style:"pappeshwar", cls:"pap", label:"Pappeshwar arrives", figure:pappeshwarFigure,
   tag:"DLC character unlocked", title:"Pappeshwar",
@@ -1494,9 +1555,7 @@ const PAP_SCENE = {
     {t:"The precinct lights flicker. Every suspect in the holding cells goes quiet at once."},
     {t:"The Goat enters,", fig:true},
     {t:"MUN tryharder, he will carry your whole team 🤩"},
-    {t:"\"Relax, Detective. I solved your cases on the drive over.\""},
-    {t:"\"They lie. I deduce. It's honestly not a fair fight.\""},
-    {t:"\"The name's Pappeshwar. Genius. Who's lying today?\""}
+    {t:"Named Pappeshwar."}
   ]
 };
 function medalFigure(){
@@ -1637,6 +1696,9 @@ function renderDlc(){
   if(pappeshwarUnlocked() && !papHidden()){
     list.innerHTML+=`<div class="dlc-item">${pappeshwarSVG(30)}<div><b>Pappeshwar</b><small>Unlocked. Pick him under Customize.</small></div></div>`;
   }
+  if(aryanUnlocked()){
+    list.innerHTML+=`<div class="dlc-item myth">${aryanSVG(30)}<div><b>Aryan</b><small>Mythic. Pick him under Customize.</small></div></div>`;
+  }
 }
 function openDlc(){ $("dlcInput").value=""; $("dlcMsg").textContent=""; $("dlcMsg").className="dlc-msg"; renderDlc(); $("dlcOverlay").hidden=false; $("dlcInput").focus(); }
 function enc(v){ try{ return btoa(unescape(encodeURIComponent(v))); }catch(e){ return ""; } }
@@ -1648,6 +1710,14 @@ $("dlcForm").addEventListener("submit",e=>{
     if(!pappeshwarUnlocked()){ msg.textContent="Unlock Pappeshwar with his DLC code first."; msg.className="dlc-msg bad"; return; }
     if(!papHidden()){ msg.textContent="Pappeshwar is already showing under Customize."; msg.className="dlc-msg good"; return; }
     store.set("r7.papHidden",false); msg.textContent="Pappeshwar is back. Find him under Customize."; msg.className="dlc-msg good"; renderDlc(); return;
+  }
+  if(enc(v)===MYTH_CODE){
+    if(aryanUnlocked()){ msg.textContent="Already unlocked. Aryan is waiting under Customize."; msg.className="dlc-msg good"; return; }
+    store.set("r7.aryan",true);
+    $("dlcOverlay").hidden=true;
+    renderCases();
+    playCutscene(ARYAN_SCENE);
+    return;
   }
   if(enc(v)===DLC_CODE){
     if(pappeshwarUnlocked() && papHidden()){ msg.textContent="Pappeshwar is hidden. Enter the show code to bring him back."; msg.className="dlc-msg bad"; return; }
@@ -1712,6 +1782,7 @@ function renderSettings(){
   });
   $("replayCut").hidden = !mentalistUnlocked();
   $("replayPap").hidden = !pappeshwarUnlocked() || papHidden();
+  $("replayAryan").hidden = !aryanUnlocked();
   $("replayAward").hidden = !awarded();
   $("replayLegend").hidden = !legendDone();
   mk($("colorOpts"),COLORS,"color",c=>{const b=document.createElement("button");b.className="swatch";b.style.background=c;b.setAttribute("aria-label","Colour "+c);return b;});
@@ -1723,6 +1794,7 @@ $("openSettings").onclick=()=>{renderSettings();$("settingsOverlay").hidden=fals
 $("closeSettings").onclick=()=>{$("settingsOverlay").hidden=true;};
 $("replayCut").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(MENTALIST_SCENE);};
 $("replayPap").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(PAP_SCENE);};
+$("replayAryan").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(ARYAN_SCENE);};
 $("replayAward").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(awardScene());};
 $("replayLegend").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(legendScene());};
 
