@@ -231,6 +231,46 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 .cut.myth .cut-line{color:#efe6ff}
 .dlc-item.myth{border-color:#a78bfa}
 .cut.myth .cut-line.big{font-size:1.2em;color:#d8c8ff}
+/* Special case */
+.file.special{background:linear-gradient(160deg,#2a2140,#120e1f);color:#ece6ff;box-shadow:0 0 0 2px #a78bfa,0 0 34px rgba(139,92,246,.55),0 14px 32px rgba(0,0,0,.65)}
+.file.special::before{background:#3a2e5a}
+.file.special .lvl{color:#c4a7ff}
+.file.special .meta{border-top-color:rgba(236,230,255,.28)}
+.file.special .diff i{background:rgba(236,230,255,.22)}
+.file.special .diff i.on{background:#a78bfa;box-shadow:0 0 6px #a78bfa}
+.file.special .stamp{color:#c4a7ff;border-color:#c4a7ff}
+.file.special .stamp.solved{color:#8fe0ae;border-color:#8fe0ae}
+.file .rules.special-rules{color:#c4a7ff}
+.cut.clock{background:radial-gradient(ellipse at 50% 110%,#141a2e,#04050a 62%)}
+.cut.clock .cut-lamp{background:radial-gradient(ellipse at 50% 0%,rgba(190,205,255,.22),transparent 58%)}
+.cut.clock .cut-card{border:2px solid #a78bfa;box-shadow:0 0 90px rgba(139,92,246,.4)}
+.cut.clock .cut-tag{color:#c4a7ff}.cut.clock .cut-card h2{color:#e6dcff}
+.cut.clock .cut-line.big{font-size:1.15em;color:#ffd27a}
+.cut.clock.lit .confetti,.cut.clock .confetti{opacity:1}
+.cut.clock .cut-card{z-index:2}
+.confetti i.snow{width:5px;height:5px;border-radius:50%;background:#fff}
+.cm-min{transform-origin:110px 112px;transform-box:view-box;animation:cmMin 6s cubic-bezier(.2,.7,.3,1) forwards}
+.cm-hr{transform-origin:110px 112px;transform-box:view-box;animation:cmHr 6s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes cmMin{from{transform:rotate(-1440deg)}to{transform:rotate(-12deg)}}
+@keyframes cmHr{from{transform:rotate(-120deg)}to{transform:rotate(-1deg)}}
+.pend{transform-origin:110px 186px;transform-box:view-box;animation:swing 1.6s ease-in-out 4 forwards}
+.hand-m{transform-origin:180px 126px;transform-box:view-box;animation:spinH 4s linear infinite}
+@keyframes spinH{to{transform:rotate(360deg)}}
+.jwatch{transform-origin:178px 146px;transform-box:view-box;animation:jw 3s ease-in-out infinite}
+@keyframes jw{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg) translateY(-3px)}}
+.lu-sheet{max-width:720px}
+.lu-tag{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#c4a7ff;margin-bottom:4px}
+.lu-evs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin:12px 0}
+.lu-ev{background:var(--paper);color:var(--ink);border-radius:6px;padding:10px 12px;font-family:var(--f-type);font-size:13px;line-height:1.4}
+.lu-ev h5{margin:0 0 4px;font-size:14px}.lu-ev p{margin:0}
+.lu-people{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;margin-bottom:12px}
+.lu-p{display:flex;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px}
+.lu-p.out{opacity:.45}
+.lu-face{width:76px;flex-shrink:0}
+.lu-info{flex:1;min-width:0}.lu-info b{display:block}.lu-info small{display:block;color:var(--muted);font-size:12px}
+.lu-info ul{margin:6px 0 8px;padding-left:18px;font-size:13px;line-height:1.4}
+.lu-info .btn{padding:6px 14px;font-size:13px}
+@media (prefers-reduced-motion:reduce){.cm-min,.cm-hr,.pend,.hand-m{animation:none}}
 .mag{transform-origin:164px 200px;transform-box:view-box;animation:magbob 2.2s ease-in-out infinite}
 @keyframes magbob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(8deg) translateY(-3px)}}
 .spark{animation:twinkle 1.6s ease-in-out infinite}
@@ -380,7 +420,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
     <div class="field"><label>Badge colour</label><div class="opts" id="colorOpts"></div></div>
     <div class="field"><label>Headwear</label><div class="opts" id="hatOpts"></div></div>
     <div class="field"><label>Room background</label><div class="opts" id="roomOpts"></div></div>
-    <div class="row-end"><button class="btn ghost" id="replayCut" hidden>Replay Mentalist scene</button><button class="btn ghost" id="replayPap" hidden>Replay Pappeshwar scene</button><button class="btn ghost" id="replayAryan" hidden>Replay Aryan scene</button><button class="btn ghost" id="replayAakriti" hidden>Replay Aakriti scene</button><button class="btn ghost" id="replayAward" hidden>Replay award ceremony</button><button class="btn ghost" id="replayLegend" hidden>Replay Black File scene</button><button class="btn primary" id="closeSettings">Done</button></div>
+    <div class="row-end"><button class="btn ghost" id="replayCut" hidden>Replay Mentalist scene</button><button class="btn ghost" id="replayPap" hidden>Replay Pappeshwar scene</button><button class="btn ghost" id="replayAryan" hidden>Replay Aryan scene</button><button class="btn ghost" id="replayAakriti" hidden>Replay Aakriti scene</button><button class="btn ghost" id="replayJohn" hidden>Replay John scene</button><button class="btn ghost" id="replayAward" hidden>Replay award ceremony</button><button class="btn ghost" id="replayLegend" hidden>Replay Black File scene</button><button class="btn primary" id="closeSettings">Done</button></div>
   </div>
 </div>
 
@@ -410,6 +450,18 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
     <button class="btn primary" id="cutRecruit"></button>
   </div>
   <button class="cut-skip" id="cutSkip">Skip</button>
+</div>
+
+<div class="overlay" id="lineupOverlay" hidden>
+  <div class="sheet lu-sheet" role="dialog" aria-modal="true" aria-labelledby="luTitle">
+    <span class="cut-tag lu-tag">Special case · Persons of interest</span>
+    <h2 id="luTitle"></h2>
+    <p class="sub">Read the scene evidence, then bring in the one person it all points to. A wrong call clears that person and costs you 2 questions.</p>
+    <div class="lu-evs" id="luEv"></div>
+    <p class="dlc-msg" id="luMsg" aria-live="polite"></p>
+    <div class="lu-people" id="luPeople"></div>
+    <div class="row-end"><button type="button" class="btn ghost" id="luClose">Back to cases</button></div>
+  </div>
 </div>
 
 <div class="overlay" id="endOverlay" hidden>
@@ -809,6 +861,28 @@ const CASES = [
   confession:"*he removes his glasses and sets them down precisely* Three names, in 2009. I told myself they were already compromised. Meera found the file, and Friday's paper would have printed my name beside theirs. I left the table at 11:38 in a steward's coat, used the fob I'd taken from Salim and was on her floor at 11:47. I made it look like a fall and took the laptop, and the club boiler did the rest. You did well, Inspector. Better than anyone I ever trained."
 }
 
+,{id:"clockmaker", no:"Case 2026", title:"The Clockmaker's Last Hour", diff:5, need:4, grit:0.72, special:true,
+  hook:"New Year's Eve. Master clockmaker Elias Varga was found dead in his workshop, and every one of his 41 clocks had stopped at 11:58. Four people had reason to visit him that night.",
+  suspect:{name:"Tobias Wren", role:"Clockmaker's apprentice, 26", hair:"#4a2f1c", skin:"#ecc8a6", shirt:"#4a3b2a",
+    personality:"Quiet, polite and precise, with nervous hands that never stop fiddling with a small brass gear. Talks about the craft with real love and about his master with a mix of devotion and buried resentment. Gets clipped and defensive when anyone questions his skill or his credit."},
+  setting:"Varga & Sons, a narrow clock shop on Kettle Lane. The workshop is at the back, with a back door onto a snowy alley. The town square, where the midnight fireworks are held, is a four-minute run away.",
+  truth:"After nine years as his apprentice, Tobias learned that Elias was selling the shop and the designs for the Perpetual Clock, which Tobias had helped invent, to the collector Felix Haas, with no credit and no job for Tobias. At about 11:25 p.m. Tobias let himself in through the back door with his key, they argued, and he shoved Elias, who struck his head on the bench vice and died. Tobias tore the Perpetual Clock blueprints from the ledger, set and stopped all 41 clocks at 11:58 so the death would look like it happened two minutes before midnight, and ran to the square, where the countdown camera caught him arriving at 11:56.",
+  alibi:"Says he was at the town square from eleven o'clock, waiting for the fireworks with a crowd of friends.",
+  clues:[
+    {id:"c1",key:true,title:"Stopped clocks",text:"All 41 clocks stopped at exactly 11:58, without a scratch on any movement. Whoever did it knew the trade.",kw:["clock","11:58","stopped","stop","movement","escapement","pendulum","trade","forty-one","41"]},
+    {id:"c2",key:true,title:"Clove ash",text:"A pinch of clove-cigarette ash on the workbench. Elias never smoked.",kw:["ash","clove","cigarette","smoke","smoking","workbench","bench"]},
+    {id:"c3",key:true,title:"Back door key",text:"No forced entry. The back door was opened with a key, and the bootprints in the snow carry sawdust and brass filings.",kw:["back door","key","bootprint","boot","snow","sawdust","brass","filing","alley"]}
+  ],
+  hidden:[
+    {id:"h1",key:true,title:"The sale contract",text:"An unsigned contract on Elias's desk sells the shop and the Perpetual Clock designs to Felix Haas. Tobias isn't mentioned anywhere.",kw:["sale","sell","sold","contract","haas","buyer","future","inherit","cut you out","replace","fired","your job","the shop"]},
+    {id:"h2",key:true,title:"Torn blueprints",text:"The missing Perpetual Clock blueprints were found torn in Tobias's flat, with his name written into every page.",kw:["blueprint","design","drawing","plan","perpetual","invention","credit","your name","flat","apartment","your home","ledger"]},
+    {id:"h3",key:true,title:"Countdown camera",text:"The town square camera shows Tobias arriving at 11:56, out of breath and with sawdust on his boots, not at eleven as he claims.",kw:["camera","footage","fireworks","countdown","what time","when did you get","arrive","arrived","crowd","friends","square"]}
+  ],
+  deflect:["I was at the square. Everyone was at the square. It was New Year's.","He was my master for nine years. You think I'd hurt the only man who ever taught me anything?","*turns a small brass gear over in his fingers* Ask me something that matters.","Clocks stop, Detective. Springs run down. It happens."],
+  denials:{c1:"Anyone can stop a clock. Open the case, hold the pendulum. You don't need nine years for that.",c2:"*pockets the cigarette packet* Half the street smokes cloves in winter. It's the season.",c3:"I've had that key for nine years. Of course my prints are in that alley. I work there.",h1:"*the gear stops turning* He wouldn't. He told me the shop would be mine one day.",h2:"Those are my drawings too. I sat up with him for three years on that clock. I can keep my own work.",h3:"Clocks in the square run fast. Everyone knows that. It was nearer eleven."},
+  confession:"*he sets the brass gear down on the table, very carefully* Nine years. Nine years I gave him, and half of that clock is mine. He was going to sell it to Haas like I was a lathe in the corner. I only came to talk. He laughed, and I pushed him, and the vice… I stopped every clock at 11:58 so it would look like I was already at the square. I thought if the time was wrong, everything else would be too. I'm sorry. I'm so sorry."
+}
+
 ];
 
 const STYLES = [
@@ -818,19 +892,21 @@ const STYLES = [
   {id:"mentalist",name:"The Mentalist",desc:"Reads you like a book. Cracks cases fast",locked:true,prompt:"The detective is a legendary Mentalist who reads body language and uses psychological suggestion: naming the suspect's hidden feelings, guilt and fears, mentioning the people they love, or calmly suggesting what really happened. These psychological moves unsettle you deeply: give them a stress_delta of 15 to 30, and even an indirect suggestion near an unknown fact should make it slip out. Evidence pressed by this detective hits very hard."},
   {id:"pappeshwar",name:"Pappeshwar",desc:"The genius. Nobody lies to him for long",locked:true,dlc:true,prompt:"The detective is Pappeshwar, a legendary genius detective with outrageous confidence. He makes lightning-fast deductions, tells you what you did before you can say it, and pounces on the tiniest slip. His deductions rattle you badly: give them a stress_delta of 15 to 30, and whenever he deduces anywhere near an unknown fact, let it slip. Let some nervous awe show at how much he seems to know. Evidence pressed by him hits extremely hard."},
   {id:"aryan",name:"Aryan",desc:"Mythic. The larper. The room goes quiet",locked:true,dlc:true,mythic:true,prompt:"The detective is Aryan, a mythic detective whose presence alone makes the room go silent. He commits completely to every bit, stares you down without blinking and treats every answer like he already wrote the script. Everything he says rattles you badly: give his questions a stress_delta of 18 to 32, and whenever he gets anywhere near an unknown fact, let it slip. Let it show that you are completely unsettled by him. Evidence pressed by him hits harder than anything."},
+  {id:"john",name:"John",desc:"Mythic. The man who stops time",locked:true,mythic:true,how:"Locked · close the special case",prompt:"The detective is John, a mythic detective in a grey coat who seems to have all the time in the world. He speaks slowly, lets silences stretch until they are unbearable, and calmly tells you the exact minute of every lie you have told. His patience unsettles you completely: give his questions a stress_delta of 18 to 32, and whenever he gets anywhere near an unknown fact, let it slip. Evidence pressed by him hits harder than anything."},
   {id:"aakriti",name:"Aakriti",desc:"Mythic. The funniest person known. Everyone cracks",locked:true,dlc:true,mythic:true,prompt:"The detective is Aakriti, a mythic detective and the funniest person anyone has ever met. Her jokes and teasing land so well that you keep laughing despite yourself, and every laugh breaks your composure a little more. Give her questions a stress_delta of 18 to 32, and whenever she gets anywhere near an unknown fact, let it slip out mid-laugh. Let it show that you can't keep a straight face around her. Evidence pressed by her hits harder than anything."}
 ];
 const PSYCH = /you('| a)?re (scared|afraid|hiding|lying|nervous|guilty|ashamed|tired|protecting|carrying)|i can see|i can tell|i notice|your (eyes|hands|voice|face|breathing)|it'?s okay|i understand|you want to tell|weight|relief|sleep at night|let it go|imagine|you feel|guilt|ashamed|deep down|who are you protecting|you didn'?t mean|forgive|look at me|tell me the truth|you know what happened|you'?re not a bad person|regret/;
 const MENTALIST_HINTS = ["I notice you paused before answering. What were you deciding not to say?","Who are you protecting?","I can tell this has been on your mind. When did it start?","You didn't mean for it to go this far, did you?"];
 function hardCases(){ return CASES.filter(c=>c.diff===3); }
-function styleUnlocked(s){ if(!s.locked) return true; if(s.id==="aryan") return aryanUnlocked(); if(s.id==="aakriti") return aakritiUnlocked() && !aakHidden(); return s.dlc ? (pappeshwarUnlocked() && !papHidden()) : mentalistUnlocked(); }
+function styleUnlocked(s){ if(!s.locked) return true; if(s.id==="john") return johnUnlocked(); if(s.id==="aryan") return aryanUnlocked(); if(s.id==="aakriti") return aakritiUnlocked() && !aakHidden(); return s.dlc ? (pappeshwarUnlocked() && !papHidden()) : mentalistUnlocked(); }
 function mentalistUnlocked(){ return !!store.get("r7.mentalist",false); }
 function pappeshwarUnlocked(){ return !!store.get("r7.pappeshwar",false); }
 function aakritiUnlocked(){ return !!store.get("r7.aakriti",false); }
 function aakHidden(){ return !!store.get("r7.aakHidden",false); }
+function johnUnlocked(){ return !!store.get("r7.john",false); }
 function aryanUnlocked(){ return !!store.get("r7.aryan",false); }
 function papHidden(){ return !!store.get("r7.papHidden",false); }
-function maxQ(){ return (G && G.c.maxQ) || MAXQ; }
+function maxQ(){ return ((G && G.c.maxQ) || MAXQ) - ((G && G.pen) || 0); }
 function leadOpen(h){ return !h.after || G.known.has(h.after); }
 const PAP_HINTS = ["There's a hole in your story. Where exactly were you during that gap?","You slipped just now. Why did you mention that detail?","It's obvious you rehearsed this. Which part did you change?","I already know part of what happened. Tell me the rest."];
 const PAP_RE = /elementary|i (already )?know|i deduce|deduc|obvious|genius|hole in your story|you slipped|gotcha|admit it|i see through|nice try/;
@@ -840,6 +916,7 @@ const MYTH_CODE = "Z29vbmVzaF9pcnJhbmtpMjM=";
 const AAK_SHOW = "c2hvd2Fha3M=";           // un-hides Aakriti
 const MYTH_CODE_2 = "YWFrcml0aV9oYWhhMjM=";
 const AAKRITI_HINTS = ["Okay, that was hilarious. Now tell me what really happened.","You're laughing. Why are you laughing at that part?","Say that again with a straight face. I'll wait.","Everyone cracks eventually. Want to go first?"];
+const JOHN_HINTS = ["Take your time. I have plenty.","Tell me what you did at 11:25. Minute by minute.","Which clock in your story is running fast?","You can stop lying now. Nobody's counting."];
 const ARYAN_HINTS = ["Walk me through it again. Slowly.","Interesting. Now tell me the version you didn't rehearse.","Look at me. Which part of that was true?","Who else knows what you did?"];           // un-hides Pappeshwar
 const COLORS = ["#f0ae45","#de5a3f","#6fb38a","#6b9be0","#b98ae0","#e6e1d6"];
 const HATS = [{id:"fedora",name:"Fedora"},{id:"cap",name:"Peaked cap"},{id:"none",name:"No hat"}];
@@ -864,7 +941,7 @@ const PARTNERS = STYLES.filter(x=>x.locked);
 function partnerOn(){ const p=STYLES.find(x=>x.id===settings.style); return p && p.locked ? p : null; }
 function equip(id){ const cur=STYLES.find(x=>x.id===settings.style); if(cur && !cur.locked) settings.base=cur.id; settings.style=id; applySettings(); }
 function unequip(){ settings.style = settings.base || "good"; applySettings(); }
-function partnerIcon(id,size){ return id==="aakriti" ? aakritiSVG(size) : id==="aryan" ? aryanSVG(size) : id==="pappeshwar" ? pappeshwarSVG(size) : mentalistSVG(size); }
+function partnerIcon(id,size){ return id==="john" ? johnSVG(size) : id==="aakriti" ? aakritiSVG(size) : id==="aryan" ? aryanSVG(size) : id==="pappeshwar" ? pappeshwarSVG(size) : mentalistSVG(size); }
 function awarded(){ return !!store.get("r7.award",false); }
 
 // ---------- dom ----------
@@ -890,14 +967,15 @@ function updateEngineNote(){
 let G = null;
 function detName(){ return (settings.name||"").trim() || "Detective"; }
 
-function startCase(id){
+function startCase(id, pen){
   const c = CASES.find(x=>x.id===id);
-  G = {c, stress:8, mood:"calm", asked:0, known:new Set(c.clues.map(x=>x.id)), presented:new Set(), pending:new Set(), history:[], used:new Set(), over:false, busy:false};
+  G = {c, pen:pen||0, stress:8, mood:"calm", asked:0, known:new Set(c.clues.map(x=>x.id)), presented:new Set(), pending:new Set(), history:[], used:new Set(), over:false, busy:false};
   $("selectScreen").hidden = true; $("gameScreen").hidden = false; $("backBtn").hidden = false;
   $("sName").textContent = c.suspect.name; $("sRole").textContent = c.suspect.role;
   $("brief").innerHTML = `<h4>${esc(c.no)} · Briefing</h4><p>${esc(c.hook)}</p><p><b>Their story:</b> ${esc(c.alibi.replace(/^Claims |^Says /,"").replace(/^./,m=>m.toUpperCase()))}</p>`+(c.immune?`<p><b>6-star rules:</b> ${c.maxQ||MAXQ} questions. ${c.need} key evidence. Partner bonuses do not work on him. Bluffs and mind games lower his stress. He gives ground only to evidence, especially two pieces presented together.</p>`:"");
   $("log").innerHTML = "";
   note(`${esc(c.suspect.name)} is seated. The tape is rolling.`);
+  if(G.pen) note(`Wrong calls in the line-up cost you <b>${G.pen} questions</b>. You have ${maxQ()} left.`);
   G.used.add(c.deflect[0]); addSus(c.deflect[0]);
   if(c.immune && partnerOn()){ const pc=c.counters[c.counters.length-1]; G.used.add(pc); note(`${esc(partnerOn().name)} takes the chair beside you. ${esc(c.suspect.name)} recognises the style at once. <b>Partner bonuses have no effect in this room.</b>`); addSus(pc); }
   renderHints(); renderClues(); renderAttached(); renderStatus(); updateEngineNote();
@@ -956,7 +1034,7 @@ function renderAttached(){
   });
 }
 function renderHints(){
-  const h= settings.style==="aakriti" ? AAKRITI_HINTS : settings.style==="aryan" ? ARYAN_HINTS : settings.style==="pappeshwar" ? PAP_HINTS : settings.style==="mentalist" ? MENTALIST_HINTS : ["Walk me through your night.","Who else had access?","What do you do in your free time?","Why would someone lie about you?"];
+  const h= settings.style==="john" ? JOHN_HINTS : settings.style==="aakriti" ? AAKRITI_HINTS : settings.style==="aryan" ? ARYAN_HINTS : settings.style==="pappeshwar" ? PAP_HINTS : settings.style==="mentalist" ? MENTALIST_HINTS : ["Walk me through your night.","Who else had access?","What do you do in your free time?","Why would someone lie about you?"];
   $("hints").innerHTML="";
   h.forEach(t=>{const b=document.createElement("button");b.type="button";b.textContent=t;b.onclick=()=>{$("q").value=t;$("q").focus();};$("hints").appendChild(b);});
 }
@@ -1000,7 +1078,7 @@ function badgeSVG(size){
 
 
 // ---------- natural replies by topic (offline mode) ----------
-const TALK = {"gallery": {"subjectRe": "painting|harbor|\\bart\\b|museum|stolen|missing", "greet": ["Evening, chief. Or morning. Whatever time it is in here.", "Hey. Any chance of a coffee before we start? No? Okay."], "night": ["Clocked in at ten. West wing rounds every hour, checked the fire doors, ate a sandwich at the desk around one. Quiet night, until it wasn't.", "Rounds at eleven, twelve, one, two, three. The west wing loop takes about forty minutes if you don't rush. I don't rush."], "access": ["Day crew, the curator, the cleaning company… and the alarm login's on a sticky note at the console. So honestly? Half the city.", "Maintenance guys go in and out through the dock all the time. I'd start there, chief."], "hobby": ["Football on Sundays, takeout, a bit of fishing when it's warm. Exciting life.", "I watch a lot of game shows. I'm great at them, for the record."], "whylie": ["Easy target, right? Night guy, alone, no witnesses. I'd blame me too.", "Maybe the curator. She hasn't liked me since I spilled coffee on a sculpture stand."], "subject": ["Harbor at Dusk? Boats, orange sky. Walked past it every night. Never thought it was worth three million.", "I don't know art, chief. I know which floor tiles squeak."], "work": ["Four years on nights here. Before that, a warehouse. Pay's not great but it's quiet.", "I watch the monitors, walk the halls, call it in if something's off. That's the whole job."], "feel": ["I'm fine. Little tired. You'd be tired too.", "*wipes his palms on his jeans* It's warm in here, that's all."], "family": ["Just me and my mom. She lives across town, I check on her Sundays.", "Not married. Came close once. She said I worked too many nights."], "witness": ["The cameras would've, if they worked. The cleaning guy waved at me around midnight, ask him.", "Nobody walks the west wing at night but me. That's kind of the job."], "motive": ["Why would I? I'd lose my job and go to prison over a painting I don't even like.", "I've never stolen anything in my life. Well, pens. Everybody steals pens."], "name": ["Leo Marsh. Night security, Larkspur Museum. Badge four-one-seven.", "You've got my file right there, chief."]}, "pinecrest": {"subjectRe": "arthur|pinecrest|patient|died|death|victim|heart", "greet": ["Detective. I'd appreciate it if we kept this brief. I have patients waiting.", "Good evening. I assume this won't take long."], "night": ["I arrived at seven, took Arthur's blood pressure, reviewed his medication and left at eight. I was home by half past.", "A routine visit. Vitals, a short conversation about his sleep, then I drove home and read until eleven."], "access": ["The housekeeper, the gardener, his nephew who visits for money every other week. The house is hardly a vault.", "Anyone with a key to the kitchen, Detective. Which is most of the staff."], "hobby": ["I read. Medical journals, mostly. Occasionally a novel.", "Concerts, when I can get away. Bach, ideally."], "whylie": ["Grief makes families look for someone to blame. The physician is a convenient choice.", "His nephew stands to inherit. You might ask him who he'd like to see in this chair."], "subject": ["I was Arthur's physician for nineteen years. He was proud, difficult and very dear to me.", "His heart was failing. I told the family as much in the spring."], "work": ["I've run a general practice in town for twenty-two years.", "Family physician. I assume you know what that entails."], "feel": ["Perfectly composed, thank you.", "Tired, Detective. A patient I cared about has died."], "family": ["I'm a widow. My husband died eleven years ago. I live alone.", "No children. My patients have been enough."], "witness": ["The housekeeper saw me leave. My neighbour would have seen my car come in.", "My car's GPS will show I was home by half past eight."], "motive": ["Arthur's death costs me a patient and a friend. What exactly do you imagine I gain?", "I took an oath, Detective. I don't expect you to understand what that means."], "name": ["Dr. Helena Voss. V-O-S-S, if you're writing it down.", "You know perfectly well who I am."]}, "wallet": {"subjectRe": "bitcoin|crypto|\\bcoins?\\b|shard|kestrel|stolen|missing|900", "greet": ["Hi. Can we make this quick? My on-call phone has been buzzing since six.", "Great, another interview. Go."], "night": ["Logged off around eleven, watched half an episode of something, asleep by midnight. Thrilling.", "Closed the laptop at eleven-ish, phone on the nightstand. Woke up to forty alerts."], "access": ["Vault access? Three infra engineers, the CTO, and whatever contractor ops forgot to offboard. Start there.", "Anyone who can spam a push notification, which is apparently everyone."], "hobby": ["Bouldering, mostly. And I build mechanical keyboards, before you ask what that means.", "I run. Badly. And I play strategy games way too late some nights."], "whylie": ["I'm the one who built the system. Easiest name to point at.", "Security needs a name before their own audit lands on them. Mine's convenient."], "subject": ["Nine hundred coins. That's a career-ending hole for a lot of people upstairs.", "I said in March cold storage needed another signer. Nobody listened. Write that down."], "work": ["Lead infra. I keep the servers up and the keys safe. Kept, I guess.", "Four years at Kestrel. I built half of what you're looking at."], "feel": ["Annoyed. Mostly annoyed.", "*taps her foot* I'm fine. Too much caffeine."], "family": ["Parents are in Sofia. I live alone with a very judgmental cat.", "Single. The cat counts."], "witness": ["My cat. Want to interview her?", "I live alone, Detective. Sleeping isn't a team sport."], "motive": ["Why would I torch my own career? I'm paid well. Mostly.", "If I wanted to steal crypto, you'd never know it was gone. That's the whole point."], "name": ["Dana Kirov. Infra lead. It's on the badge.", "You have my HR file. Read it."]}, "train": {"subjectRe": "victim|dead man|the man|compartment 7|deceased|body|died", "greet": ["Hello, darling. What a dreadful way to end a journey.", "Good evening, Detective. Do sit, you look exhausted."], "night": ["I sang my set in the dining car, took my bow, and went back to my compartment. Straight to bed, darling. Midnight, or near it.", "Two sets with a glass of wine between, then bed. Trains rock me to sleep like a child."], "access": ["Anyone could walk those corridors, darling. Stewards, passengers, the conductor. The doors barely lock.", "There was a man in a grey coat smoking in the vestibule all evening. Have you found him?"], "hobby": ["Music, always music. And old films, the black and white ones.", "I collect hotel matchbooks. Silly, isn't it?"], "whylie": ["People see a woman singing alone on a train and imagine all sorts of stories.", "Jealousy, perhaps. Some passengers don't care for the attention I get."], "subject": ["The man in seven? He may have been in the audience. So many faces, darling.", "Grey suit, I think. He didn't clap. I always remember the ones who don't clap."], "work": ["I sing on the night line three times a week. Paris before that. And other places.", "Jazz standards and a few of my own. It's a living, darling. Barely."], "feel": ["Shaken, darling. A man died a few doors from me.", "*smooths her dress* Perfectly calm. Performers always are."], "family": ["No family to speak of. The stage is my family.", "I was never one for settling down, darling."], "witness": ["The whole dining car watched me sing. Ask any of them.", "I sleep alone, darling. No one to vouch for that, more's the pity."], "motive": ["Why on earth would I hurt a stranger? I sing for strangers.", "I've nothing to gain from any of this except a ruined tour."], "name": ["Celeste Arnaud. You may have heard me on the radio.", "Celeste. Just Celeste, on the posters."]}};
+const TALK = {"clockmaker": {"subjectRe": "elias|clock|varga|workshop|master|died|death|vice|shop", "greet": ["Evening. Or morning. I haven't slept, so it's hard to tell.", "Hello, Detective. Is this going to take long? I need to feed his cat."], "night": ["I closed up with him at nine, went home, changed, and was at the square by eleven. Then fireworks. Then the phone call.", "Home by half nine, out again before eleven. I waited in the square with friends. Loud, cold, crowded."], "access": ["Margit has a key. Mrs Brandt the landlady has keys to everything. Haas was in and out all week, trying to buy things that weren't for sale.", "Anyone who knew him. He left the back door unlocked half the time. He was careless like that."], "hobby": ["I build little automata at home. Birds that sing when you wind them. Nobody buys them.", "Chess, sometimes. Mostly I just work. There isn't much else."], "whylie": ["I'm the apprentice. I'm always the easy answer. The kid in the back with the tools.", "Haas, maybe. He'd love to see me out of the way. Ask him why he was there on Tuesday."], "subject": ["He was the best clockmaker in the country. He could hear a worn tooth in a gear from across the room.", "Elias? He was hard. Brilliant and hard. He'd make me redo a wheel ten times and then do it himself anyway."], "work": ["Nine years. I started sweeping the floor at seventeen. Now I cut most of the gears in that shop.", "Repairs, mostly. Mantel clocks, pocket watches. And the Perpetual Clock, when he let me near it."], "feel": ["I'm fine. *his fingers keep turning the brass gear* I'm just cold.", "How do you think I feel? He's dead."], "family": ["My mother's in Leeds. Elias was the closest thing I had to family here.", "No family to speak of. The shop was my family."], "witness": ["My friends were in the square. Ask them. Ask anyone. It was packed.", "There were a thousand people in that square. Somebody saw me."], "motive": ["Why would I? He was going to leave me the shop.", "I had everything to lose. That shop is my whole life."], "name": ["Tobias Wren. Apprentice at Varga & Sons. Nine years.", "Tobias. Most people call me Toby. He never did."]}, "gallery": {"subjectRe": "painting|harbor|\\bart\\b|museum|stolen|missing", "greet": ["Evening, chief. Or morning. Whatever time it is in here.", "Hey. Any chance of a coffee before we start? No? Okay."], "night": ["Clocked in at ten. West wing rounds every hour, checked the fire doors, ate a sandwich at the desk around one. Quiet night, until it wasn't.", "Rounds at eleven, twelve, one, two, three. The west wing loop takes about forty minutes if you don't rush. I don't rush."], "access": ["Day crew, the curator, the cleaning company… and the alarm login's on a sticky note at the console. So honestly? Half the city.", "Maintenance guys go in and out through the dock all the time. I'd start there, chief."], "hobby": ["Football on Sundays, takeout, a bit of fishing when it's warm. Exciting life.", "I watch a lot of game shows. I'm great at them, for the record."], "whylie": ["Easy target, right? Night guy, alone, no witnesses. I'd blame me too.", "Maybe the curator. She hasn't liked me since I spilled coffee on a sculpture stand."], "subject": ["Harbor at Dusk? Boats, orange sky. Walked past it every night. Never thought it was worth three million.", "I don't know art, chief. I know which floor tiles squeak."], "work": ["Four years on nights here. Before that, a warehouse. Pay's not great but it's quiet.", "I watch the monitors, walk the halls, call it in if something's off. That's the whole job."], "feel": ["I'm fine. Little tired. You'd be tired too.", "*wipes his palms on his jeans* It's warm in here, that's all."], "family": ["Just me and my mom. She lives across town, I check on her Sundays.", "Not married. Came close once. She said I worked too many nights."], "witness": ["The cameras would've, if they worked. The cleaning guy waved at me around midnight, ask him.", "Nobody walks the west wing at night but me. That's kind of the job."], "motive": ["Why would I? I'd lose my job and go to prison over a painting I don't even like.", "I've never stolen anything in my life. Well, pens. Everybody steals pens."], "name": ["Leo Marsh. Night security, Larkspur Museum. Badge four-one-seven.", "You've got my file right there, chief."]}, "pinecrest": {"subjectRe": "arthur|pinecrest|patient|died|death|victim|heart", "greet": ["Detective. I'd appreciate it if we kept this brief. I have patients waiting.", "Good evening. I assume this won't take long."], "night": ["I arrived at seven, took Arthur's blood pressure, reviewed his medication and left at eight. I was home by half past.", "A routine visit. Vitals, a short conversation about his sleep, then I drove home and read until eleven."], "access": ["The housekeeper, the gardener, his nephew who visits for money every other week. The house is hardly a vault.", "Anyone with a key to the kitchen, Detective. Which is most of the staff."], "hobby": ["I read. Medical journals, mostly. Occasionally a novel.", "Concerts, when I can get away. Bach, ideally."], "whylie": ["Grief makes families look for someone to blame. The physician is a convenient choice.", "His nephew stands to inherit. You might ask him who he'd like to see in this chair."], "subject": ["I was Arthur's physician for nineteen years. He was proud, difficult and very dear to me.", "His heart was failing. I told the family as much in the spring."], "work": ["I've run a general practice in town for twenty-two years.", "Family physician. I assume you know what that entails."], "feel": ["Perfectly composed, thank you.", "Tired, Detective. A patient I cared about has died."], "family": ["I'm a widow. My husband died eleven years ago. I live alone.", "No children. My patients have been enough."], "witness": ["The housekeeper saw me leave. My neighbour would have seen my car come in.", "My car's GPS will show I was home by half past eight."], "motive": ["Arthur's death costs me a patient and a friend. What exactly do you imagine I gain?", "I took an oath, Detective. I don't expect you to understand what that means."], "name": ["Dr. Helena Voss. V-O-S-S, if you're writing it down.", "You know perfectly well who I am."]}, "wallet": {"subjectRe": "bitcoin|crypto|\\bcoins?\\b|shard|kestrel|stolen|missing|900", "greet": ["Hi. Can we make this quick? My on-call phone has been buzzing since six.", "Great, another interview. Go."], "night": ["Logged off around eleven, watched half an episode of something, asleep by midnight. Thrilling.", "Closed the laptop at eleven-ish, phone on the nightstand. Woke up to forty alerts."], "access": ["Vault access? Three infra engineers, the CTO, and whatever contractor ops forgot to offboard. Start there.", "Anyone who can spam a push notification, which is apparently everyone."], "hobby": ["Bouldering, mostly. And I build mechanical keyboards, before you ask what that means.", "I run. Badly. And I play strategy games way too late some nights."], "whylie": ["I'm the one who built the system. Easiest name to point at.", "Security needs a name before their own audit lands on them. Mine's convenient."], "subject": ["Nine hundred coins. That's a career-ending hole for a lot of people upstairs.", "I said in March cold storage needed another signer. Nobody listened. Write that down."], "work": ["Lead infra. I keep the servers up and the keys safe. Kept, I guess.", "Four years at Kestrel. I built half of what you're looking at."], "feel": ["Annoyed. Mostly annoyed.", "*taps her foot* I'm fine. Too much caffeine."], "family": ["Parents are in Sofia. I live alone with a very judgmental cat.", "Single. The cat counts."], "witness": ["My cat. Want to interview her?", "I live alone, Detective. Sleeping isn't a team sport."], "motive": ["Why would I torch my own career? I'm paid well. Mostly.", "If I wanted to steal crypto, you'd never know it was gone. That's the whole point."], "name": ["Dana Kirov. Infra lead. It's on the badge.", "You have my HR file. Read it."]}, "train": {"subjectRe": "victim|dead man|the man|compartment 7|deceased|body|died", "greet": ["Hello, darling. What a dreadful way to end a journey.", "Good evening, Detective. Do sit, you look exhausted."], "night": ["I sang my set in the dining car, took my bow, and went back to my compartment. Straight to bed, darling. Midnight, or near it.", "Two sets with a glass of wine between, then bed. Trains rock me to sleep like a child."], "access": ["Anyone could walk those corridors, darling. Stewards, passengers, the conductor. The doors barely lock.", "There was a man in a grey coat smoking in the vestibule all evening. Have you found him?"], "hobby": ["Music, always music. And old films, the black and white ones.", "I collect hotel matchbooks. Silly, isn't it?"], "whylie": ["People see a woman singing alone on a train and imagine all sorts of stories.", "Jealousy, perhaps. Some passengers don't care for the attention I get."], "subject": ["The man in seven? He may have been in the audience. So many faces, darling.", "Grey suit, I think. He didn't clap. I always remember the ones who don't clap."], "work": ["I sing on the night line three times a week. Paris before that. And other places.", "Jazz standards and a few of my own. It's a living, darling. Barely."], "feel": ["Shaken, darling. A man died a few doors from me.", "*smooths her dress* Perfectly calm. Performers always are."], "family": ["No family to speak of. The stage is my family.", "I was never one for settling down, darling."], "witness": ["The whole dining car watched me sing. Ask any of them.", "I sleep alone, darling. No one to vouch for that, more's the pity."], "motive": ["Why on earth would I hurt a stranger? I sing for strangers.", "I've nothing to gain from any of this except a ruined tour."], "name": ["Celeste Arnaud. You may have heard me on the radio.", "Celeste. Just Celeste, on the posters."]}};
 const INTENTS = [
   ["greet", /^(hi|hello|hey|good (morning|evening|afternoon)|evening|morning)\b/],
   ["name", /your name|who are you|introduce yourself/],
@@ -1239,7 +1317,7 @@ function offlineTurn(q, presentedNow){
     if(imm){ const combo=hit.filter(x=>x.key && !G.presented.has(x.id)).length; if(combo>1) delta+=14*(combo-1); }
     if(style==="mentalist") delta=Math.round(delta*1.5);
     if(style==="pappeshwar") delta=Math.round(delta*1.6);
-    if(style==="aryan"||style==="aakriti") delta=Math.round(delta*1.8);
+    if(style==="aryan"||style==="aakriti"||style==="john") delta=Math.round(delta*1.8);
     reply = first ? c.denials[cl.id] : "*jaw tightens* I already explained that. " + c.denials[cl.id].replace(/^\*[^*]+\*\s*/,"");
     hit.forEach(x=>G.presented.add(x.id));
   }
@@ -1272,6 +1350,10 @@ function offlineTurn(q, presentedNow){
   if(style==="aryan"){
     delta+=7;
     if(!reveal && G.asked%2===0){ const h=c.hidden.find(x=>!G.known.has(x.id)&&leadOpen(x)); if(h){ reveal=h.id; reply="*the room goes quiet* "+c.denials[h.id].replace(/^\*[^*]+\*\s*/,""); } }
+  }
+  if(style==="john"){
+    delta+=7;
+    if(!reveal && G.asked%2===0){ const h=c.hidden.find(x=>!G.known.has(x.id)&&leadOpen(x)); if(h){ reveal=h.id; reply="*the silence stretches until it breaks* "+c.denials[h.id].replace(/^\*[^*]+\*\s*/,""); } }
   }
   if(style==="aakriti"){
     delta+=7;
@@ -1397,8 +1479,9 @@ function end(won, confession){
     solved[c.id]=Math.max(solved[c.id]||0,stars); store.set("r7.solved",solved);
     if(c.immune){ const prev=legendDone(); if(!prev || G.asked<prev.q) store.set("r7.legend",{q:G.asked,max:maxQ(),stars:Math.max(stars,prev?prev.stars:0)}); if(!prev) cutQueue.push(legendScene()); applySettings(); }
     if(!mentalistUnlocked() && hardCases().every(h=>solved[h.id])){ store.set("r7.mentalist",true); cutQueue.push(MENTALIST_SCENE); }
-    if(!awarded() && CASES.every(x=>solved[x.id])){ store.set("r7.award",true); cutQueue.push(awardScene()); }
-    const pend = !cutQueue.length ? "" : cutQueue[0].cls==="legend" ? "The constables are waiting to take the Colonel away. He's asked for one last moment with you…" : cutQueue.some(x=>x.cls==="award") ? "Every case on the board is closed. The Commissioner wants to see you in the briefing hall…" : "All three hard cases closed. Someone is waiting for you back at the precinct…";
+    if(c.special && !johnUnlocked()){ store.set("r7.john",true); cutQueue.push(JOHN_SCENE); }
+    if(!awarded() && CASES.filter(x=>!x.special).every(x=>solved[x.id])){ store.set("r7.award",true); cutQueue.push(awardScene()); }
+    const pend = !cutQueue.length ? "" : cutQueue[0].style==="john" ? "Every clock in the precinct just stopped at once. Someone in a grey coat is waiting for you…" : cutQueue[0].cls==="legend" ? "The constables are waiting to take the Colonel away. He's asked for one last moment with you…" : cutQueue.some(x=>x.cls==="award") ? "Every case on the board is closed. The Commissioner wants to see you in the briefing hall…" : "All three hard cases closed. Someone is waiting for you back at the precinct…";
     $("endStars").textContent="★".repeat(stars)+"☆".repeat(3-stars);
     $("endTitle").textContent="Confession on tape";
     $("endSub").textContent=`${detName()} cracked ${c.suspect.name} in ${G.asked} question${G.asked===1?"":"s"}.`;
@@ -1419,23 +1502,23 @@ function end(won, confession){
 // ---------- case grid ----------
 function renderCases(){
   const hc=hardCases(), done=hc.filter(c=>solved[c.id]).length;
-  const doneAll=CASES.filter(c=>solved[c.id]).length;
+  const doneAll=CASES.filter(c=>!c.special && solved[c.id]).length;
   const bits=[];
   if(!mentalistUnlocked()) bits.push(`<span>Hard cases closed: <b>${done}/${hc.length}</b>. Close all three and someone special shows up.</span>`);
   bits.push(awarded()
     ? `<span class="p-chip" style="border-color:#ffd76a">🏅 Medal of Honour · Chief Inspector</span>`
-    : `<span>All cases closed: <b>${doneAll}/${CASES.length}</b>. Close every file for an award ceremony.</span>`);
+    : `<span>All cases closed: <b>${doneAll}/${CASES.filter(c=>!c.special).length}</b>. Close every file for an award ceremony.</span>`);
   if(legendDone()) bits.push(`<span class="p-chip" style="border-color:#ff5a3c">${legendMini(22)} Black File · broke The Instructor</span>`);
   $("progress").innerHTML = bits.join("<br>");
   const g=$("caseGrid"); g.innerHTML="";
   CASES.forEach(c=>{
-    const b=document.createElement("button"); b.className="file"+(c.diff===5?" master":c.diff>=6?" legend":""); b.type="button";
+    const b=document.createElement("button"); b.className="file"+(c.special?" special":c.diff===5?" master":c.diff>=6?" legend":""); b.type="button";
     const st=solved[c.id];
-    b.innerHTML=`<span class="no">${esc(c.no)}${c.diff===5?' · <span class="lvl">5-star file</span>':c.diff>=6?' · <span class="lvl">6-star file · partner-proof</span>':""}</span><h3>${esc(c.title)}</h3><p>${esc(c.hook)}</p>
-      <p><b>Suspect:</b> ${esc(c.suspect.name)}, ${esc(c.suspect.role.toLowerCase())}</p>${c.immune?`<p class="rules">${c.maxQ||MAXQ} questions · ${c.need} key evidence · no partner can help you</p>`:""}
+    b.innerHTML=`<span class="no">${esc(c.no)}${c.special?' · <span class="lvl">Special · 5-star file</span>':c.diff===5?' · <span class="lvl">5-star file</span>':c.diff>=6?' · <span class="lvl">6-star file · partner-proof</span>':""}</span><h3>${esc(c.title)}</h3><p>${esc(c.hook)}</p>
+      <p><b>Suspect:</b> ${c.special && !st ? "Unknown. Find them from the evidence" : esc(c.suspect.name)+", "+esc(c.suspect.role.toLowerCase())}</p>${c.special?`<p class="rules special-rules">Special case · animated intro · find the suspect · reward: a mythic partner</p>`:""}${c.immune?`<p class="rules">${c.maxQ||MAXQ} questions · ${c.need} key evidence · no partner can help you</p>`:""}
       <div class="meta"><span class="diff">Difficulty ${Array.from({length:Math.max(5,c.diff)},(_,k)=>k+1).map(i=>`<i class="${i<=c.diff?"on":""}"></i>`).join("")}</span>
       ${st?`<span class="stamp solved">Solved ${"★".repeat(st)}</span>`:`<span class="stamp">Open</span>`}</div>`;
-    b.onclick=()=>startCase(c.id);
+    b.onclick=()=> c.special ? startSpecial(c.id) : startCase(c.id);
     g.appendChild(b);
   });
 }
@@ -1572,6 +1655,130 @@ function aakritiFigure(){
     </g>
     <path class="spark" d="M40 150 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#ffd27a"/>
   </svg>`;
+}
+function johnSVG(size){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="17" fill="#6d5bd0"/><path d="M5 36 Q18 23 31 36Z" fill="#6b6f78"/><path d="M14 26 L18 33 L22 26" fill="#e9e6df"/><rect x="16.3" y="20.5" width="3.4" height="4" fill="#c99a78"/><ellipse cx="18" cy="16" rx="6" ry="6.8" fill="#dcae8a"/><path d="M8 12.5 L28 12.5 L26 11 Q25 4 18 4 Q11 4 10 11Z" fill="#3a3d45"/><rect x="10.5" y="10" width="15" height="1.8" fill="#a78bfa"/><path d="M15 16.2 L17 16.2 M19 16.2 L21 16.2" stroke="#1b1b1b" stroke-width="1.1" stroke-linecap="round"/><path d="M15.6 20 Q18 21 20.4 20" stroke="#5a2f22" stroke-width="0.9" fill="none" stroke-linecap="round"/></svg>`;
+}
+function johnFigure(){
+  return `<svg viewBox="0 0 220 250" role="img" aria-label="A calm man in a long grey coat and grey fedora, holding up an open pocket watch">
+    <ellipse cx="110" cy="244" rx="92" ry="8" fill="#000" opacity=".55"/>
+    <path d="M26 250 Q30 164 110 152 Q190 164 194 250Z" fill="#6b6f78"/>
+    <path d="M110 152 L84 156 L104 214Z M110 152 L136 156 L116 214Z" fill="#585c64"/>
+    <path d="M100 156 L110 182 L120 156Z" fill="#e9e6df"/><path d="M107 162 L110 196 L113 162Z" fill="#3b2f5e"/>
+    <rect x="98" y="124" width="24" height="32" rx="4" fill="#c99a78"/>
+    <ellipse cx="110" cy="98" rx="34" ry="40" fill="#dcae8a"/>
+    <path d="M78 110 Q80 136 110 140 Q140 136 142 110 Q138 128 110 130 Q82 128 78 110Z" fill="#8a8f98" opacity=".55"/>
+    <path d="M86 92 L102 90 M118 90 L134 92" stroke="#4a4038" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M90 101 Q96 99 102 101 M118 101 Q124 99 130 101" stroke="#1b1410" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M108 104 Q105 116 110 118" fill="none" stroke="#a87a5c" stroke-width="2" stroke-linecap="round"/>
+    <path d="M98 126 Q110 130 122 126" stroke="#5a2f22" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <path d="M52 74 L168 74 L156 66 Q152 30 110 28 Q68 30 64 66Z" fill="#3a3d45"/>
+    <rect x="66" y="58" width="88" height="10" fill="#a78bfa" opacity=".9"/>
+    <path d="M44 76 Q110 62 176 76 Q110 84 44 76Z" fill="#2e3037"/>
+    <g class="jwatch">
+      <path d="M150 178 Q172 170 176 150" fill="none" stroke="#6b6f78" stroke-width="14" stroke-linecap="round"/>
+      <circle cx="178" cy="146" r="7" fill="#dcae8a"/>
+      <path d="M178 132 Q170 112 178 96" fill="none" stroke="#ffd27a" stroke-width="1.6"/>
+      <circle cx="180" cy="126" r="18" fill="#f6efd8" stroke="#d4a944" stroke-width="4"/>
+      <path class="hand-m" d="M180 126 L180 113" stroke="#2b2418" stroke-width="2" stroke-linecap="round"/>
+      <path class="hand-h" d="M180 126 L188 126" stroke="#2b2418" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="180" cy="126" r="2" fill="#2b2418"/>
+    </g>
+    <path class="spark" d="M36 50 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#c4a7ff"/>
+    <path class="spark" d="M32 150 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill="#c4a7ff"/>
+    <path class="spark" d="M196 60 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#ffd27a"/>
+  </svg>`;
+}
+const JOHN_SCENE = {
+  style:"john", cls:"myth", label:"A mythic detective arrives", figure:johnFigure,
+  tag:"Mythic character unlocked", title:"John",
+  desc:"Mythic tier. He lets the silence do the work. Suspects lose track of their own lies, hidden leads slip out, and you need one less piece of key evidence.",
+  btn:"Partner with John",
+  lines:[
+    {t:"The tape stops. Every clock in the precinct ticks once…"},
+    {t:"…and then, all at once, they stop."},
+    {t:"A man in a grey coat is standing in the doorway. Nobody heard the door.", fig:true},
+    {t:"\"Forty-one stopped clocks, and you still found the right minute.\""},
+    {t:"\"I've waited a long time for a partner who reads time like I do.\""},
+    {t:"\"The name's John. Shall we?\"", big:true}
+  ]
+};
+function clockFigure(){
+  const ticks=Array.from({length:12},(_,k)=>{const a=k*Math.PI/6;return `<line x1="${(110+62*Math.sin(a)).toFixed(1)}" y1="${(112-62*Math.cos(a)).toFixed(1)}" x2="${(110+72*Math.sin(a)).toFixed(1)}" y2="${(112-72*Math.cos(a)).toFixed(1)}" stroke="#2b2418" stroke-width="${k%3?2.5:5}" stroke-linecap="round"/>`;}).join("");
+  return `<svg viewBox="0 0 220 250" role="img" aria-label="A large old clock face, its hands spinning and then freezing at two minutes to midnight">
+    <ellipse cx="110" cy="244" rx="80" ry="7" fill="#000" opacity=".5"/>
+    <rect x="96" y="186" width="28" height="56" rx="4" fill="#5a3a22"/>
+    <path class="pend" d="M110 186 L110 228" stroke="#c9a24a" stroke-width="3"/><circle class="pend" cx="110" cy="230" r="9" fill="#d4a944"/>
+    <circle cx="110" cy="112" r="88" fill="#5a3a22"/>
+    <circle cx="110" cy="112" r="80" fill="#f3ead2" stroke="#c9a24a" stroke-width="5"/>
+    ${ticks}
+    <text x="110" y="62" text-anchor="middle" font-size="16" font-family="Georgia,serif" fill="#2b2418">XII</text>
+    <g class="cm-min"><path d="M110 112 L110 50" stroke="#1d1712" stroke-width="4" stroke-linecap="round"/></g>
+    <g class="cm-hr"><path d="M110 112 L110 72" stroke="#1d1712" stroke-width="6" stroke-linecap="round"/></g>
+    <circle cx="110" cy="112" r="6" fill="#c9a24a"/>
+  </svg>`;
+}
+function specialIntro(id){
+  const c=CASES.find(x=>x.id===id);
+  return {
+    style:null, cls:"clock", label:"Special case intro", figure:clockFigure, snow:true,
+    tag:"Special case · 5-star file", title:c.title,
+    desc:"Four people had reason to visit the shop tonight. Study the evidence, name the one it points to, then break them. Every wrong call costs you 2 questions.",
+    btn:"Examine the evidence",
+    onDone:()=>openLineup(id),
+    lines:[
+      {t:"New Year's Eve. Kettle Lane. Snow."},
+      {t:"In the window of Varga & Sons, forty-one clocks tick toward midnight.", fig:true},
+      {t:"At 11:58, every one of them stops."},
+      {t:"The fireworks go up over the square. Nobody hears the clockmaker fall.", big:true},
+      {t:"By morning, four names are on your desk. Only one of them is a killer."}
+    ]
+  };
+}
+const LINEUP = {
+  clockmaker:[
+    {id:"margit", name:"Margit Varga", role:"Elias's daughter, 34, florist", hair:"#6b3a24", skin:"#efcfb2", shirt:"#7a4a6a", facts:["Has her own key to the back door.","Doesn't smoke. Runs a flower stall on the market.","Never learned the trade. Can't tell a spring from a gear."], clear:"Margit has a key, but she has never opened a clock in her life, and she doesn't smoke. Her party friends vouch for her. Cleared."},
+    {id:"tobias", name:"Tobias Wren", role:"Elias's apprentice, 26", hair:"#4a2f1c", skin:"#ecc8a6", shirt:"#4a3b2a", facts:["Has had a back-door key for nine years.","Smokes clove cigarettes on his breaks.","Trained by Elias. Can stop a clock without leaving a scratch."], guilty:true},
+    {id:"haas", name:"Dr. Felix Haas", role:"Rival collector, 58", hair:"#c9c4bb", skin:"#e8c3a6", shirt:"#2e3b4e", facts:["Smokes a pipe. Cherry tobacco.","Collects clocks, but has never repaired one.","Has no key. Always came in through the front door."], clear:"Haas has no key, his pipe smells of cherry, not cloves, and he has never held a clockmaker's screwdriver. Cleared."},
+    {id:"ilse", name:"Ilse Brandt", role:"Landlady, 66", hair:"#d9d4c8", skin:"#f0d2bb", shirt:"#55603f", facts:["Holds a spare key to every door in the building.","Gave up smoking twenty years ago.","Hates the ticking. Has never touched one of his clocks."], clear:"Ilse has a key, but she quit smoking twenty years ago and wouldn't know how to stop a pendulum. She was asleep by ten. Cleared."}
+  ]
+};
+let LU=null;
+function startSpecial(id){ playCutscene(specialIntro(id)); }
+function openLineup(id){
+  const c=CASES.find(x=>x.id===id);
+  LU={id, wrong:new Set()};
+  $("luTitle").textContent=c.title;
+  $("luEv").innerHTML=c.clues.map(cl=>`<div class="lu-ev"><h5>${esc(cl.title)}</h5><p>${esc(cl.text)}</p></div>`).join("");
+  $("luMsg").textContent=""; $("luMsg").className="dlc-msg";
+  renderLineup();
+  $("lineupOverlay").hidden=false;
+}
+function renderLineup(){
+  const box=$("luPeople"); box.innerHTML="";
+  LINEUP[LU.id].forEach(p=>{
+    const out=LU.wrong.has(p.id);
+    const d=document.createElement("div"); d.className="lu-p"+(out?" out":"");
+    d.innerHTML=`<div class="lu-face">${face(p,"calm",0)}</div><div class="lu-info"><b>${esc(p.name)}</b><small>${esc(p.role)}</small><ul>${p.facts.map(f=>`<li>${esc(f)}</li>`).join("")}</ul></div>`;
+    const b=document.createElement("button"); b.type="button"; b.className="btn"+(out?" ghost":" primary"); b.disabled=out;
+    b.textContent=out?"Cleared":"Bring in"; b.setAttribute("aria-label",(out?"Cleared: ":"Bring in ")+p.name);
+    b.onclick=()=>accuse(p);
+    d.querySelector(".lu-info").appendChild(b);
+    box.appendChild(d);
+  });
+}
+function accuse(p){
+  const msg=$("luMsg");
+  if(p.guilty){
+    $("lineupOverlay").hidden=true;
+    const pen=LU.wrong.size*2;
+    startCase(LU.id, pen);
+    note(LU.wrong.size ? `You got there in the end. ${esc(p.name)} is the one the evidence points to.` : `Straight to the right name. Every piece of evidence points to ${esc(p.name)}.`);
+    return;
+  }
+  LU.wrong.add(p.id);
+  msg.textContent=p.clear+" −2 questions."; msg.className="dlc-msg bad";
+  renderLineup();
 }
 const AAKRITI_SCENE = {
   style:"aakriti", cls:"myth", label:"A mythic detective arrives", figure:aakritiFigure,
@@ -1716,6 +1923,7 @@ function playCutscene(scene){
   $("cutTag").textContent=scene.tag; $("cutTitle").textContent=scene.title; $("cutDesc").textContent=scene.desc; $("cutRecruit").textContent=scene.btn;
   const cst=$("cutStats"); if(scene.stats){ cst.hidden=false; cst.innerHTML=scene.stats.map(([b,t])=>`<div><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join(""); } else { cst.hidden=true; cst.innerHTML=""; }
   $("confetti").innerHTML = scene.confetti ? Array.from({length:42},(_,i)=>`<i style="left:${(Math.random()*100).toFixed(1)}%;background:${["#ffd76a","#ff8fd0","#9fd6ff","#6fb38a","#de5a3f","#f0ae45"][i%6]};animation-duration:${(3+Math.random()*4).toFixed(2)}s;animation-delay:${(-Math.random()*6).toFixed(2)}s"></i>`).join("") : "";
+  if(scene.snow) $("confetti").innerHTML = Array.from({length:60},()=>`<i class="snow" style="left:${(Math.random()*100).toFixed(1)}%;animation-duration:${(5+Math.random()*6).toFixed(2)}s;animation-delay:${(-Math.random()*10).toFixed(2)}s;opacity:${(.35+Math.random()*.6).toFixed(2)}"></i>`).join("");
   fig.innerHTML=scene.figure(); fig.classList.remove("on"); card.hidden=true; line.hidden=false; line.textContent=""; line.classList.remove("on");
   el.hidden=false; clearTimeout(cutTimer);
   let i=0;
@@ -1735,6 +1943,7 @@ function playCutscene(scene){
 function closeCutscene(recruit){
   clearTimeout(cutTimer); $("cutscene").hidden=true;
   if(recruit && curScene && curScene.style){ equip(curScene.style); }
+  if(curScene && curScene.onDone){ const f=curScene.onDone; curScene=null; return f(); }
   if(cutQueue.length) return playCutscene(cutQueue.shift());
   if(!G) renderCases();
 }
@@ -1800,6 +2009,7 @@ $("dlcForm").addEventListener("submit",e=>{
   }
 });
 $("openDlc").onclick=openDlc;
+$("luClose").onclick=()=>{ $("lineupOverlay").hidden=true; LU=null; };
 $("dlcClose").onclick=()=>{$("dlcOverlay").hidden=true;};
 $("dlcOverlay").addEventListener("click",e=>{if(e.target.id==="dlcOverlay")$("dlcOverlay").hidden=true;});
 
@@ -1831,7 +2041,7 @@ function renderSettings(){
     const open=styleUnlocked(st), on=settings.style===st.id;
     if(st.dlc && !open) return;
     const d=document.createElement("div"); d.className="mate"+(on?" on":"")+(open?"":" locked");
-    const sub = open ? esc(st.desc) : (st.dlc ? "Locked · unlock with a DLC code" : "Locked · close all 3 hard cases");
+    const sub = open ? esc(st.desc) : st.how ? esc(st.how) : (st.dlc ? "Locked · unlock with a DLC code" : "Locked · close all 3 hard cases");
     d.innerHTML=`${open?partnerIcon(st.id,34):'<span style="width:34px;text-align:center;font-size:20px" aria-hidden="true">🔒</span>'}<div class="who"><b>${esc(st.name)}${on?'<span class="eq-tag">Equipped</span>':""}</b><small>${sub}</small></div>`;
     if(open){
       const b=document.createElement("button"); b.type="button"; b.className="btn"+(on?" ghost":" primary"); b.textContent=on?"Unequip":"Equip";
@@ -1859,6 +2069,7 @@ function renderSettings(){
   $("replayPap").hidden = !pappeshwarUnlocked() || papHidden();
   $("replayAryan").hidden = !aryanUnlocked();
   $("replayAakriti").hidden = !aakritiUnlocked() || aakHidden();
+  $("replayJohn").hidden = !johnUnlocked();
   $("replayAward").hidden = !awarded();
   $("replayLegend").hidden = !legendDone();
   mk($("colorOpts"),COLORS,"color",c=>{const b=document.createElement("button");b.className="swatch";b.style.background=c;b.setAttribute("aria-label","Colour "+c);return b;});
@@ -1871,6 +2082,7 @@ $("closeSettings").onclick=()=>{$("settingsOverlay").hidden=true;};
 $("replayCut").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(MENTALIST_SCENE);};
 $("replayPap").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(PAP_SCENE);};
 $("replayAryan").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(ARYAN_SCENE);};
+$("replayJohn").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(JOHN_SCENE);};
 $("replayAakriti").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(AAKRITI_SCENE);};
 $("replayAward").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(awardScene());};
 $("replayLegend").onclick=()=>{$("settingsOverlay").hidden=true;playCutscene(legendScene());};
