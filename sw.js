@@ -1,5 +1,5 @@
 // Offline support: caches the game so it opens without internet after the first visit.
-const CACHE = "last-alibi-v3";
+const CACHE = "last-alibi-v4";
 const CORE = ["./", "index.html", "privacy.html", "manifest.webmanifest",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png",
   "icons/apple-touch-icon.png", "icons/favicon-48.png"];
