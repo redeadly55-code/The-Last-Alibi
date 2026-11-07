@@ -823,10 +823,11 @@ const STYLES = [
 const PSYCH = /you('| a)?re (scared|afraid|hiding|lying|nervous|guilty|ashamed|tired|protecting|carrying)|i can see|i can tell|i notice|your (eyes|hands|voice|face|breathing)|it'?s okay|i understand|you want to tell|weight|relief|sleep at night|let it go|imagine|you feel|guilt|ashamed|deep down|who are you protecting|you didn'?t mean|forgive|look at me|tell me the truth|you know what happened|you'?re not a bad person|regret/;
 const MENTALIST_HINTS = ["I notice you paused before answering. What were you deciding not to say?","Who are you protecting?","I can tell this has been on your mind. When did it start?","You didn't mean for it to go this far, did you?"];
 function hardCases(){ return CASES.filter(c=>c.diff===3); }
-function styleUnlocked(s){ if(!s.locked) return true; if(s.id==="aryan") return aryanUnlocked(); if(s.id==="aakriti") return aakritiUnlocked(); return s.dlc ? (pappeshwarUnlocked() && !papHidden()) : mentalistUnlocked(); }
+function styleUnlocked(s){ if(!s.locked) return true; if(s.id==="aryan") return aryanUnlocked(); if(s.id==="aakriti") return aakritiUnlocked() && !aakHidden(); return s.dlc ? (pappeshwarUnlocked() && !papHidden()) : mentalistUnlocked(); }
 function mentalistUnlocked(){ return !!store.get("r7.mentalist",false); }
 function pappeshwarUnlocked(){ return !!store.get("r7.pappeshwar",false); }
 function aakritiUnlocked(){ return !!store.get("r7.aakriti",false); }
+function aakHidden(){ return !!store.get("r7.aakHidden",false); }
 function aryanUnlocked(){ return !!store.get("r7.aryan",false); }
 function papHidden(){ return !!store.get("r7.papHidden",false); }
 function maxQ(){ return (G && G.c.maxQ) || MAXQ; }
@@ -836,6 +837,7 @@ const PAP_RE = /elementary|i (already )?know|i deduce|deduc|obvious|genius|hole 
 const DLC_CODE = "cGFwcHVnZW5pdXMyMzQ=";
 const PAP_SHOW = "c2hvd3BhcHM=";
 const MYTH_CODE = "Z29vbmVzaF9pcnJhbmtpMjM=";
+const AAK_SHOW = "c2hvd2Fha3M=";           // un-hides Aakriti
 const MYTH_CODE_2 = "YWFrcml0aV9oYWhhMjM=";
 const AAKRITI_HINTS = ["Okay, that was hilarious. Now tell me what really happened.","You're laughing. Why are you laughing at that part?","Say that again with a straight face. I'll wait.","Everyone cracks eventually. Want to go first?"];
 const ARYAN_HINTS = ["Walk me through it again. Slowly.","Interesting. Now tell me the version you didn't rehearse.","Look at me. Which part of that was true?","Who else knows what you did?"];           // un-hides Pappeshwar
@@ -1748,7 +1750,7 @@ function renderDlc(){
   if(aryanUnlocked()){
     list.innerHTML+=`<div class="dlc-item myth">${aryanSVG(30)}<div><b>Aryan</b><small>Mythic. Pick him under Customize.</small></div></div>`;
   }
-  if(aakritiUnlocked()){
+  if(aakritiUnlocked() && !aakHidden()){
     list.innerHTML+=`<div class="dlc-item myth">${aakritiSVG(30)}<div><b>Aakriti</b><small>Mythic. Pick her under Customize.</small></div></div>`;
   }
 }
@@ -1763,7 +1765,13 @@ $("dlcForm").addEventListener("submit",e=>{
     if(!papHidden()){ msg.textContent="Pappeshwar is already showing under Customize."; msg.className="dlc-msg good"; return; }
     store.set("r7.papHidden",false); msg.textContent="Pappeshwar is back. Find him under Customize."; msg.className="dlc-msg good"; renderDlc(); return;
   }
+  if(enc(v)===AAK_SHOW){
+    if(!aakritiUnlocked()){ msg.textContent="Invalid code. Check it and try again."; msg.className="dlc-msg bad"; return; }
+    if(!aakHidden()){ msg.textContent="Aakriti is already showing under Customize."; msg.className="dlc-msg good"; return; }
+    store.set("r7.aakHidden",false); msg.textContent="Aakriti is back. Find her under Customize."; msg.className="dlc-msg good"; renderDlc(); return;
+  }
   if(enc(v)===MYTH_CODE_2){
+    if(aakritiUnlocked() && aakHidden()){ msg.textContent="Aakriti is hidden. Enter the show code to bring her back."; msg.className="dlc-msg bad"; return; }
     if(aakritiUnlocked()){ msg.textContent="Already unlocked. Aakriti is waiting under Customize."; msg.className="dlc-msg good"; return; }
     store.set("r7.aakriti",true);
     $("dlcOverlay").hidden=true;
@@ -1837,13 +1845,20 @@ function renderSettings(){
         hb.onclick=()=>{ if(settings.style==="pappeshwar") unequip(); store.set("r7.papHidden",true); renderSettings(); };
         d.appendChild(hb);
       }
+      if(st.id==="aakriti"){
+        const hb=document.createElement("button"); hb.type="button"; hb.className="btn ghost"; hb.textContent="Hide";
+        hb.title="Hide Aakriti. Enter the code showaaks to bring her back.";
+        hb.setAttribute("aria-label","Hide Aakriti");
+        hb.onclick=()=>{ if(settings.style==="aakriti") unequip(); store.set("r7.aakHidden",true); renderSettings(); };
+        d.appendChild(hb);
+      }
     }
     ro.appendChild(d);
   });
   $("replayCut").hidden = !mentalistUnlocked();
   $("replayPap").hidden = !pappeshwarUnlocked() || papHidden();
   $("replayAryan").hidden = !aryanUnlocked();
-  $("replayAakriti").hidden = !aakritiUnlocked();
+  $("replayAakriti").hidden = !aakritiUnlocked() || aakHidden();
   $("replayAward").hidden = !awarded();
   $("replayLegend").hidden = !legendDone();
   mk($("colorOpts"),COLORS,"color",c=>{const b=document.createElement("button");b.className="swatch";b.style.background=c;b.setAttribute("aria-label","Colour "+c);return b;});

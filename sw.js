@@ -1,5 +1,5 @@
 // Offline support: caches the game so it opens without internet after the first visit.
-const CACHE = "last-alibi-v2";
+const CACHE = "last-alibi-v1";
 const CORE = ["./", "index.html", "privacy.html", "manifest.webmanifest",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png",
   "icons/apple-touch-icon.png", "icons/favicon-48.png"];
@@ -12,14 +12,6 @@ self.addEventListener("activate", e => {
 });
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
-  // Pages: always try the network first so updates show up straight away.
-  if (e.request.mode === "navigate") {
-    e.respondWith(fetch(e.request).then(res => {
-      const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy));
-      return res;
-    }).catch(() => caches.match(e.request).then(hit => hit || caches.match("index.html"))));
-    return;
-  }
   e.respondWith(
     caches.match(e.request).then(hit => {
       const net = fetch(e.request).then(res => {
