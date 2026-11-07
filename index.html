@@ -286,6 +286,15 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 .mate .who b{display:block;font-size:14px}
 .mate .who small{display:block;color:var(--muted);font-size:12px}
 .mate .btn{padding:6px 12px;font-size:13px;flex-shrink:0}
+.plate-gold{display:inline-block;padding:1px 9px;border-radius:5px;font-weight:800;letter-spacing:.04em;color:#2a1a00;
+  background:linear-gradient(180deg,#fff3a8,#ffd23f 45%,#f0a81c);border:1px solid #ffe680;
+  box-shadow:0 0 6px rgba(255,210,63,.75),0 0 16px rgba(255,190,40,.45),inset 0 1px 0 rgba(255,255,255,.7);
+  text-shadow:0 1px 0 rgba(255,255,255,.45);animation:plateGlow 2.4s ease-in-out infinite}
+@keyframes plateGlow{50%{box-shadow:0 0 10px rgba(255,220,80,.95),0 0 28px rgba(255,190,40,.7),inset 0 1px 0 rgba(255,255,255,.7)}}
+.mate .who b .plate-gold{font-size:13px}
+.mate.god{border-color:#ffd23f;box-shadow:0 0 14px rgba(255,210,63,.25)}
+.dlc-item.god{border-color:#ffd23f;box-shadow:0 0 12px rgba(255,210,63,.3)}
+@media (prefers-reduced-motion:reduce){.plate-gold{animation:none}}
 .eq-tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--lamp);margin-left:6px}
 .partner-pill{display:inline-flex;align-items:center;gap:6px;margin-left:4px;padding-left:10px;border-left:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 .partner-pill button{background:none;border:0;color:var(--muted);font-size:15px;padding:0 2px;line-height:1}
@@ -890,7 +899,7 @@ const STYLES = [
   {id:"bad",name:"Bad cop",desc:"Aggressive, raises pressure fast",prompt:"The detective uses an aggressive bad-cop style. Evidence-backed pressure hits harder, but empty threats make the suspect defiant and lower stress."},
   {id:"sharp",name:"Analyst",desc:"Calm, precise, catches contradictions",prompt:"The detective uses a calm analytical style. Pointing out contradictions between the suspect's own statements raises stress a lot."},
   {id:"mentalist",name:"The Mentalist",desc:"Reads you like a book. Cracks cases fast",locked:true,prompt:"The detective is a legendary Mentalist who reads body language and uses psychological suggestion: naming the suspect's hidden feelings, guilt and fears, mentioning the people they love, or calmly suggesting what really happened. These psychological moves unsettle you deeply: give them a stress_delta of 15 to 30, and even an indirect suggestion near an unknown fact should make it slip out. Evidence pressed by this detective hits very hard."},
-  {id:"pappeshwar",name:"Pappeshwar",desc:"The genius. Nobody lies to him for long",locked:true,dlc:true,prompt:"The detective is Pappeshwar, a legendary genius detective with outrageous confidence. He makes lightning-fast deductions, tells you what you did before you can say it, and pounces on the tiniest slip. His deductions rattle you badly: give them a stress_delta of 15 to 30, and whenever he deduces anywhere near an unknown fact, let it slip. Let some nervous awe show at how much he seems to know. Evidence pressed by him hits extremely hard."},
+  {id:"pappeshwar",name:"Pappeshwar",desc:"Godlike. Nobody lies to him. Not even in the 6-star room",locked:true,dlc:true,god:true,prompt:"The detective is Pappeshwar, a godlike genius detective. He seems to know everything before it happens: he tells you what you did, when, and why, before you can open your mouth, and no training, rehearsal or technique works on him. Every question he asks rattles you to the core: give his questions a stress_delta of 22 to 35, and whenever he gets anywhere near an unknown fact, let it slip at once. Let real fear and awe show, as if you are facing something more than human. Evidence pressed by him hits harder than anything."},
   {id:"aryan",name:"Aryan",desc:"Mythic. The larper. The room goes quiet",locked:true,dlc:true,mythic:true,prompt:"The detective is Aryan, a mythic detective whose presence alone makes the room go silent. He commits completely to every bit, stares you down without blinking and treats every answer like he already wrote the script. Everything he says rattles you badly: give his questions a stress_delta of 18 to 32, and whenever he gets anywhere near an unknown fact, let it slip. Let it show that you are completely unsettled by him. Evidence pressed by him hits harder than anything."},
   {id:"john",name:"John",desc:"Mythic. The man who stops time",locked:true,mythic:true,how:"Locked · close the special case",prompt:"The detective is John, a mythic detective in a grey coat who seems to have all the time in the world. He speaks slowly, lets silences stretch until they are unbearable, and calmly tells you the exact minute of every lie you have told. His patience unsettles you completely: give his questions a stress_delta of 18 to 32, and whenever he gets anywhere near an unknown fact, let it slip. Evidence pressed by him hits harder than anything."},
   {id:"aakriti",name:"Aakriti",desc:"Mythic. The funniest person known. Everyone cracks",locked:true,dlc:true,mythic:true,prompt:"The detective is Aakriti, a mythic detective and the funniest person anyone has ever met. Her jokes and teasing land so well that you keep laughing despite yourself, and every laugh breaks your composure a little more. Give her questions a stress_delta of 18 to 32, and whenever she gets anywhere near an unknown fact, let it slip out mid-laugh. Let it show that you can't keep a straight face around her. Evidence pressed by her hits harder than anything."}
@@ -938,6 +947,7 @@ const solved = store.get("r7.solved",{});
 if(!settings.base || !STYLES.find(x=>x.id===settings.base && !x.locked)) settings.base = STYLES.find(x=>x.id===settings.style && !x.locked) ? settings.style : "good";
 { const cur=STYLES.find(x=>x.id===settings.style); if(!cur || (cur.locked && !styleUnlocked(cur))) settings.style=settings.base; }
 const PARTNERS = STYLES.filter(x=>x.locked);
+function papGod(){ const p=partnerOn(); return !!(p && p.id==="pappeshwar"); }
 function partnerOn(){ const p=STYLES.find(x=>x.id===settings.style); return p && p.locked ? p : null; }
 function equip(id){ const cur=STYLES.find(x=>x.id===settings.style); if(cur && !cur.locked) settings.base=cur.id; settings.style=id; applySettings(); }
 function unequip(){ settings.style = settings.base || "good"; applySettings(); }
@@ -977,13 +987,14 @@ function startCase(id, pen){
   note(`${esc(c.suspect.name)} is seated. The tape is rolling.`);
   if(G.pen) note(`Wrong calls in the line-up cost you <b>${G.pen} questions</b>. You have ${maxQ()} left.`);
   G.used.add(c.deflect[0]); addSus(c.deflect[0]);
-  if(c.immune && partnerOn()){ const pc=c.counters[c.counters.length-1]; G.used.add(pc); note(`${esc(partnerOn().name)} takes the chair beside you. ${esc(c.suspect.name)} recognises the style at once. <b>Partner bonuses have no effect in this room.</b>`); addSus(pc); }
+  if(c.immune && papGod()){ note(`Pappeshwar takes the chair beside you. ${esc(c.suspect.name)} starts to name the technique, then stops. <b>No partner can help in this room. Pappeshwar was never just a partner.</b>`); }
+  else if(c.immune && partnerOn()){ const pc=c.counters[c.counters.length-1]; G.used.add(pc); note(`${esc(partnerOn().name)} takes the chair beside you. ${esc(c.suspect.name)} recognises the style at once. <b>Partner bonuses have no effect in this room.</b>`); addSus(pc); }
   renderHints(); renderClues(); renderAttached(); renderStatus(); updateEngineNote();
   $("q").value=""; $("q").focus();
   window.scrollTo({top:0});
 }
 
-function keyNeed(){ return partnerOn() && !G.c.immune ? Math.max(1,G.c.need-1) : G.c.need; }
+function keyNeed(){ return partnerOn() && (!G.c.immune || papGod()) ? Math.max(1,G.c.need-1) : G.c.need; }
 function keyPressed(){
   const all=[...G.c.clues,...G.c.hidden];
   return [...G.presented].filter(id=>all.find(x=>x.id===id)?.key).length;
@@ -1304,7 +1315,8 @@ function offlineTurn(q, presentedNow){
   const c=G.c, low=q.toLowerCase();
   let delta=1, reveal=null, reply=null;
   const imm = !!c.immune;
-  const style = imm && partnerOn() ? (settings.base||"good") : settings.style;
+  const god = papGod();
+  const style = imm && partnerOn() && !god ? (settings.base||"good") : settings.style;
   // evidence presented or mentioned
   const all=[...c.clues,...c.hidden];
   const hit = presentedNow.length ? presentedNow.map(id=>all.find(x=>x.id===id))
@@ -1316,7 +1328,7 @@ function offlineTurn(q, presentedNow){
     if(style==="bad") delta+=4;
     if(imm){ const combo=hit.filter(x=>x.key && !G.presented.has(x.id)).length; if(combo>1) delta+=14*(combo-1); }
     if(style==="mentalist") delta=Math.round(delta*1.5);
-    if(style==="pappeshwar") delta=Math.round(delta*1.6);
+    if(style==="pappeshwar") delta=Math.round(delta*2.1);
     if(style==="aryan"||style==="aakriti"||style==="john") delta=Math.round(delta*1.8);
     reply = first ? c.denials[cl.id] : "*jaw tightens* I already explained that. " + c.denials[cl.id].replace(/^\*[^*]+\*\s*/,"");
     hit.forEach(x=>G.presented.add(x.id));
@@ -1330,8 +1342,8 @@ function offlineTurn(q, presentedNow){
     }
   }
   if(!reply){
-    if(/\b(confess|admit|just tell|you did it|liar|lying)\b/.test(low)){ delta = imm ? -4 : style==="bad"? 3 : 2; reply = imm ? "*not unkindly* Shouting is what people do when they've run out of evidence. You haven't run out yet. Don't start." : "*scoffs* You'll need more than shouting at me."; }
-    else if(imm && (PSYCH.test(low)||PAP_RE.test(low))){ delta = -3; const f=c.counters.find(l=>!G.used.has(l)); reply = f||c.counters[G.asked%c.counters.length]; G.used.add(reply); }
+    if(/\b(confess|admit|just tell|you did it|liar|lying)\b/.test(low) && !god){ delta = imm ? -4 : style==="bad"? 3 : 2; reply = imm ? "*not unkindly* Shouting is what people do when they've run out of evidence. You haven't run out yet. Don't start." : "*scoffs* You'll need more than shouting at me."; }
+    else if(imm && !god && (PSYCH.test(low)||PAP_RE.test(low))){ delta = -3; const f=c.counters.find(l=>!G.used.has(l)); reply = f||c.counters[G.asked%c.counters.length]; G.used.add(reply); }
     else { reply = talkReply(q); if(reply) delta = imm?1:2; else { reply = nextDeflect(); if(imm) delta = -3; } }
   }
   if(/contradict|earlier you said|you just said|but you said/.test(low) && style==="sharp") delta+=8;
@@ -1341,11 +1353,11 @@ function offlineTurn(q, presentedNow){
     else if(!/^\*/.test(reply)) reply="*looks away* "+reply;
   }
   if(style==="pappeshwar"){
-    delta+=5;
-    if(PAP_RE.test(low)||PSYCH.test(low)){
-      delta+=14;
-      if(!reveal){ const h=c.hidden.find(x=>!G.known.has(x.id)&&leadOpen(x)); if(h){ reveal=h.id; reply="*blinks, rattled* How did you… "+c.denials[h.id].replace(/^\*[^*]+\*\s*/,""); } }
-    }
+    if(imm && delta<0) delta=0;
+    delta+=10;
+    const deduce=PAP_RE.test(low)||PSYCH.test(low);
+    if(deduce) delta+=16;
+    if(!reveal && (deduce || G.asked%2===0)){ const h=c.hidden.find(x=>!G.known.has(x.id)&&leadOpen(x)); if(h){ reveal=h.id; reply=(imm?"*the composure finally cracks* That's not in any manual… ":"*blinks, rattled* How did you… ")+c.denials[h.id].replace(/^\*[^*]+\*\s*/,""); } }
   }
   if(style==="aryan"){
     delta+=7;
@@ -1376,7 +1388,7 @@ function buildPrompt(q, presentedNow){
 
 CHARACTER: ${c.suspect.name}, ${c.suspect.role}.
 PERSONALITY: ${c.suspect.personality}
-${c.immune ? "UNBREAKABLE SUSPECT (this overrides the interrogation style below): you trained interrogators for twelve years. You instantly recognise good cop, bad cop, mentalist suggestion, cold reading and showy genius deductions, and you name the technique politely. Those moves get a stress_delta of -5 to 0 and never cause a reveal, however good the detective's partner is. Vague questions and bluffs get -3 to 1. Only specific evidence (most of all two pieces of evidence connected together) or a real contradiction in your own earlier words moves you, and never more than " + c.cap + " for one line. Reveal an unknown fact only if the detective names its subject directly.\n" : ""}${c.grit && !c.immune ? "MASTER-LEVEL SUSPECT: you are exceptionally composed. Give 0 to 4 stress_delta for anything except specific evidence, a caught contradiction or a very sharp psychological move, and never more than 22 for a single line.\n" : ""}SETTING: ${c.setting}
+${c.immune && papGod() ? "UNBREAKABLE SUSPECT, EXCEPT AGAINST PAPPESHWAR: you trained interrogators for twelve years and no technique or partner has ever worked on you. Pappeshwar is the one exception. You try to name his technique and cannot, because he is not using one; he simply knows. Follow the interrogation style below fully. Your composure breaks a little more with every question, and real evidence connected together breaks you completely.\n" : c.immune ? "UNBREAKABLE SUSPECT (this overrides the interrogation style below): you trained interrogators for twelve years. You instantly recognise good cop, bad cop, mentalist suggestion, cold reading and showy genius deductions, and you name the technique politely. Those moves get a stress_delta of -5 to 0 and never cause a reveal, however good the detective's partner is. Vague questions and bluffs get -3 to 1. Only specific evidence (most of all two pieces of evidence connected together) or a real contradiction in your own earlier words moves you, and never more than " + c.cap + " for one line. Reveal an unknown fact only if the detective names its subject directly.\n" : ""}${c.grit && !c.immune ? "MASTER-LEVEL SUSPECT: you are exceptionally composed. Give 0 to 4 stress_delta for anything except specific evidence, a caught contradiction or a very sharp psychological move, and never more than 22 for a single line.\n" : ""}SETTING: ${c.setting}
 THE SECRET TRUTH (you are guilty; hide this): ${c.truth}
 YOUR COVER STORY: ${c.alibi}
 
@@ -1442,7 +1454,7 @@ async function ask(q){
   // apply
   if(viaAI) presentedNow.forEach(id=>G.presented.add(id));
   let delta = Math.max(-10,Math.min(30,Number(res.stress_delta)||0));
-  if(viaAI && G.c.grit) delta = Math.min(delta, G.c.cap || 22);
+  if(viaAI && G.c.grit) delta = Math.min(delta, papGod() ? 30 : (G.c.cap || 22));
   G.stress = Math.max(0, G.stress + delta);
   const enough = keyPressed() >= keyNeed();
   if(!enough && G.stress>=100) G.stress = 94;
@@ -1477,7 +1489,7 @@ function end(won, confession){
   if(won){
     const left=maxQ()-G.asked, stars= left>=6?3: left>=3?2:1;
     solved[c.id]=Math.max(solved[c.id]||0,stars); store.set("r7.solved",solved);
-    if(c.immune){ const prev=legendDone(); if(!prev || G.asked<prev.q) store.set("r7.legend",{q:G.asked,max:maxQ(),stars:Math.max(stars,prev?prev.stars:0)}); if(!prev) cutQueue.push(legendScene()); applySettings(); }
+    if(c.immune){ const prev=legendDone(); if(!prev || G.asked<prev.q) store.set("r7.legend",{q:G.asked,max:maxQ(),stars:Math.max(stars,prev?prev.stars:0),pap:papGod()}); if(!prev) cutQueue.push(legendScene()); applySettings(); }
     if(!mentalistUnlocked() && hardCases().every(h=>solved[h.id])){ store.set("r7.mentalist",true); cutQueue.push(MENTALIST_SCENE); }
     if(c.special && !johnUnlocked()){ store.set("r7.john",true); cutQueue.push(JOHN_SCENE); }
     if(!awarded() && CASES.filter(x=>!x.special).every(x=>solved[x.id])){ store.set("r7.award",true); cutQueue.push(awardScene()); }
@@ -1806,7 +1818,7 @@ const ARYAN_SCENE = {
 const PAP_SCENE = {
   style:"pappeshwar", cls:"pap", label:"Pappeshwar arrives", figure:pappeshwarFigure,
   tag:"DLC character unlocked", title:"Pappeshwar",
-  desc:"The genius detective. Every question rattles suspects, bold deductions shake hidden leads loose, and you need one less piece of key evidence.",
+  desc:"Godlike tier. Every question shakes suspects to the core, hidden leads spill out, you need one less piece of key evidence, and he is the only one who can crack the 6-star file.",
   btn:"Partner with Pappeshwar",
   lines:[
     {t:"Code accepted. Classified file PG-234 is now open."},
@@ -1899,7 +1911,7 @@ function legendScene(){
   return {
     style:null, cls:"legend", label:"The Black File", figure:colonelFigure, swapFig:blackFileFigure,
     tag:"6-star file closed", title:"The Black File",
-    stats:[[L.q+"/"+L.max,"Questions"],["★".repeat(L.stars)+"☆".repeat(3-L.stars),"Rating"],["0","Partner help"]],
+    stats:[[L.q+"/"+L.max,"Questions"],["★".repeat(L.stars)+"☆".repeat(3-L.stars),"Rating"],(L.pap?["Pappeshwar","No partner could. He did."]:["0","Partner help"])],
     desc:`${detName()} broke the man who wrote the manual. The Black File badge now sits on your detective chip, and no one in the precinct will ever call you a rookie again.`,
     btn:"Take the file",
     lines:[
@@ -1954,7 +1966,7 @@ $("cutRecruit").onclick=()=>closeCutscene(true);
 function renderDlc(){
   const list=$("dlcList"); list.innerHTML="";
   if(pappeshwarUnlocked() && !papHidden()){
-    list.innerHTML+=`<div class="dlc-item">${pappeshwarSVG(30)}<div><b>Pappeshwar</b><small>Unlocked. Pick him under Customize.</small></div></div>`;
+    list.innerHTML+=`<div class="dlc-item god">${pappeshwarSVG(30)}<div><b><span class="plate-gold">Pappeshwar</span></b><small>Godlike. Pick him under Customize.</small></div></div>`;
   }
   if(aryanUnlocked()){
     list.innerHTML+=`<div class="dlc-item myth">${aryanSVG(30)}<div><b>Aryan</b><small>Mythic. Pick him under Customize.</small></div></div>`;
@@ -2018,7 +2030,7 @@ function applySettings(){
   document.documentElement.setAttribute("data-room",settings.room);
   $("detName").innerHTML=esc(detName())+(awarded()?'<span class="medal-mini" title="Medal of Honour">🏅</span>':"")+(legendDone()?`<span class="legend-mini" title="Black File: cracked the 6-star case">${legendMini(20)}</span>`:""); $("detBadge").innerHTML=badgeSVG(30);
   const p=partnerOn(), pill=$("partnerPill");
-  if(p){ pill.hidden=false; pill.innerHTML=`${partnerIcon(p.id,22)}<span>${esc(p.name)}</span><button type="button" title="Unequip" aria-label="Unequip ${esc(p.name)}">×</button>`;
+  if(p){ pill.hidden=false; pill.innerHTML=`${partnerIcon(p.id,22)}<span${p.god?' class="plate-gold"':''}>${esc(p.name)}</span><button type="button" title="Unequip" aria-label="Unequip ${esc(p.name)}">×</button>`;
     pill.querySelector("button").onclick=()=>{ unequip(); if(!$("settingsOverlay").hidden) renderSettings(); };
   } else { pill.hidden=true; pill.innerHTML=""; }
   store.set("r7.settings",settings);
@@ -2040,9 +2052,9 @@ function renderSettings(){
   PARTNERS.forEach(st=>{
     const open=styleUnlocked(st), on=settings.style===st.id;
     if(st.dlc && !open) return;
-    const d=document.createElement("div"); d.className="mate"+(on?" on":"")+(open?"":" locked");
+    const d=document.createElement("div"); d.className="mate"+(on?" on":"")+(open?"":" locked")+(open&&st.god?" god":"");
     const sub = open ? esc(st.desc) : st.how ? esc(st.how) : (st.dlc ? "Locked · unlock with a DLC code" : "Locked · close all 3 hard cases");
-    d.innerHTML=`${open?partnerIcon(st.id,34):'<span style="width:34px;text-align:center;font-size:20px" aria-hidden="true">🔒</span>'}<div class="who"><b>${esc(st.name)}${on?'<span class="eq-tag">Equipped</span>':""}</b><small>${sub}</small></div>`;
+    d.innerHTML=`${open?partnerIcon(st.id,34):'<span style="width:34px;text-align:center;font-size:20px" aria-hidden="true">🔒</span>'}<div class="who"><b>${open&&st.god?`<span class="plate-gold">${esc(st.name)}</span>`:esc(st.name)}${on?'<span class="eq-tag">Equipped</span>':""}</b><small>${sub}</small></div>`;
     if(open){
       const b=document.createElement("button"); b.type="button"; b.className="btn"+(on?" ghost":" primary"); b.textContent=on?"Unequip":"Equip";
       b.setAttribute("aria-label",(on?"Unequip ":"Equip ")+st.name);
