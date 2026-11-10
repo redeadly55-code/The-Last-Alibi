@@ -426,6 +426,18 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 @keyframes cFlash{0%{transform:scale(2.2) rotate(-8deg);opacity:0}18%{transform:scale(1) rotate(-6deg);opacity:1}75%{opacity:1}100%{transform:scale(1.05) rotate(-6deg);opacity:0}}
 .court .hit{animation:shake .4s}
 .dlc-item.court-item{border-color:#ffcf6e}
+.cut.courtcut{background:radial-gradient(ellipse at 50% 110%,#2b1a0c,#060403 62%)}
+.cut.courtcut .cut-lamp{background:radial-gradient(ellipse at 50% 0%,rgba(255,207,110,.30),transparent 58%)}
+.cut.courtcut .cut-card{border:2px solid #ffcf6e;box-shadow:0 0 90px rgba(255,207,110,.35)}
+.cut.courtcut .cut-card h2{color:#ffdf9a}.cut.courtcut .cut-tag{color:#ffcf6e}.cut.courtcut .cut-line{color:#f6ecd2}
+.cut.courtcut .cut-line.big{font-family:var(--f-display);font-size:clamp(40px,10vw,72px);color:#ffd23f;letter-spacing:.03em}
+.af-gavel{transform-box:fill-box;transform-origin:100% 100%;animation:afBang 1.4s ease-in-out infinite}
+@keyframes afBang{0%,55%,100%{transform:rotate(-28deg)}70%{transform:rotate(6deg)}78%{transform:rotate(0)}}
+.af-win{animation:afFlick 3s ease-in-out infinite}
+@keyframes afFlick{0%,100%{opacity:.75}45%{opacity:.95}50%{opacity:.55}55%{opacity:.9}}
+.af-burst{transform-box:fill-box;transform-origin:center;animation:afBurst 1.2s ease-out}
+@keyframes afBurst{from{transform:scale(.3) rotate(-20deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.af-gavel,.af-win,.af-burst{animation:none}}
 </style>
 </head>
 <body>
@@ -574,6 +586,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
       <h3 class="court-h">Choose a trial</h3>
       <div class="court-grid" id="courtTrials"></div>
       <p class="c-note" id="courtNote" aria-live="polite"></p>
+      <div style="margin-top:14px"><button type="button" class="btn ghost" id="courtReplay">Replay opening</button></div>
     </section>
     <section id="courtBattle" hidden>
       <div class="c-side" id="cRivalBox"><span id="cRivalIcon"></span><div class="who"><b id="cRivalName"></b><small id="cRivalRole"></small><div class="c-bar rival"><i id="cRivalBar"></i></div></div><span class="c-num" id="cRivalNum"></span></div>
@@ -2093,6 +2106,7 @@ function playCutscene(scene){
     line.classList.remove("on");
     cutTimer=setTimeout(()=>{
       if(L.fig){ el.classList.add("lit"); fig.classList.add("on"); }
+      if(L.frame){ el.classList.add("lit"); fig.classList.remove("on"); setTimeout(()=>{ fig.innerHTML=L.frame(); fig.classList.add("on"); },500); }
       if(L.swap && scene.swapFig){ fig.classList.remove("on"); setTimeout(()=>{ fig.innerHTML=scene.swapFig(); fig.classList.add("on"); },500); }
       line.textContent=L.t; line.classList.toggle("big",!!L.big); line.classList.toggle("typed",!!L.typed); line.classList.add("on");
       cutTimer=setTimeout(step, 1300 + L.t.length*32);
@@ -2332,7 +2346,7 @@ $("dlcForm").addEventListener("submit",e=>{
   if(!v) return;
   if(enc(v)===COURT_CODE){
     const first=!courtUnlocked(); store.set("r7.court",true);
-    $("dlcOverlay").hidden=true; openCourt(first); return;
+    $("dlcOverlay").hidden=true; if(first) playCourtOpening(true); else openCourt(false); return;
   }
   if(enc(v)===PAP_SHOW){
     if(!pappeshwarUnlocked()){ msg.textContent="Unlock Pappeshwar with his DLC code first."; msg.className="dlc-msg bad"; return; }
@@ -2452,23 +2466,24 @@ function courtMenu(note){
   const avail=C_ORDER.filter(courtFighterOk);
   if(!avail.includes(courtPick)) courtPick = avail[0] || null;
   const fg=$("courtFighters"); fg.innerHTML="";
-  C_ORDER.forEach(id=>{
-    const f=C_FIGHTERS[id], ok=avail.includes(id), b=document.createElement("button");
-    b.type="button"; b.className="c-card"+(courtPick===id?" on":""); b.disabled=!ok;
-    b.innerHTML=`${partnerIcon(id,48)}<div><b>${esc(f.name)}</b><small>${ok?`${esc(f.tier)} · ${esc(f.passive)}`:"Locked · unlock this DLC character with their code first"}</small>${ok?`<small style="margin-top:4px"><b style="display:inline;font-size:12.5px;color:#ffd23f">${esc(f.special)}:</b> ${esc(f.specialDesc)}</small>`:""}</div>`;
-    if(ok) b.onclick=()=>{ courtPick=id; store.set("r7.courtFighter",id); courtMenu(""); };
+  avail.forEach(id=>{
+    const f=C_FIGHTERS[id], b=document.createElement("button");
+    b.type="button"; b.className="c-card"+(courtPick===id?" on":"");
+    b.innerHTML=`${partnerIcon(id,48)}<div><b>${esc(f.name)}</b><small>${esc(f.tier)} · ${esc(f.passive)}</small><small style="margin-top:4px"><b style="display:inline;font-size:12.5px;color:#ffd23f">${esc(f.special)}:</b> ${esc(f.specialDesc)}</small></div>`;
+    b.onclick=()=>{ courtPick=id; store.set("r7.courtFighter",id); courtMenu(""); };
     fg.appendChild(b);
   });
+  if(!avail.length) fg.innerHTML=`<div class="c-card" style="opacity:.7"><span style="font-size:30px" aria-hidden="true">🔒</span><div><b>No attorney yet</b><small>Redeem a DLC character code to bring your first attorney to court.</small></div></div>`;
   const wins=courtWins(), tg=$("courtTrials"); tg.innerHTML="";
   C_TRIALS.forEach((t,i)=>{
     const open = i===0 || wins[C_TRIALS[i-1].id], b=document.createElement("button");
     b.type="button"; b.className="c-card"; b.disabled=!open || !courtPick;
-    b.innerHTML=`${rivalSVG(t.rival.color,48)}<div><b>${esc(t.title)}</b><small>${esc(t.level)} · vs ${esc(t.rival.name)}</small><small>${open?esc(t.intro):"Locked · win the previous trial first"}</small>${wins[t.id]?`<small class="won">Won with ${esc(C_FIGHTERS[wins[t.id]] ? C_FIGHTERS[wins[t.id]].name : "your attorney")}</small>`:""}</div>`;
+    b.innerHTML=`${rivalSVG(t.rival.color,48)}<div><b>${esc(t.title)}</b><small>${esc(t.level)} · vs ${esc(t.rival.name)}</small><small>${open?esc(t.intro):"Locked · win the previous trial first"}</small>${wins[t.id]?`<small class="won">Won${avail.includes(wins[t.id])?" with "+esc(C_FIGHTERS[wins[t.id]].name):""}</small>`:""}</div>`;
     if(open) b.onclick=()=>startTrial(i);
     tg.appendChild(b);
   });
   const n=$("courtNote");
-  if(!avail.length){ n.textContent="You need at least one DLC character to fight. Unlock Pappeshwar, Aryan or Aakriti with their DLC code, then come back."; n.className="c-note bad"; }
+  if(!avail.length){ n.textContent="You need a DLC character to fight. Redeem a DLC character code, then come back."; n.className="c-note bad"; }
   else if(C_TRIALS.every(t=>wins[t.id])){ n.textContent=(note?note+" ":"")+"⚖️ Senior Advocate: you have won every trial. Replay any of them with a different attorney."; n.className="c-note"; }
   else { n.textContent=note||""; n.className="c-note"; }
 }
@@ -2639,7 +2654,71 @@ $("cPresent").onclick=()=>{
   box.hidden=false;
   box.scrollIntoView({behavior:"smooth",block:"nearest"});
 };
+// ---------- AttorneyFighter opening cutscene (frame by frame) ----------
+function afCourthouseFrame(){
+  return `<svg viewBox="0 0 220 250" role="img" aria-label="A grand courthouse with tall pillars at night, its windows glowing">
+    <circle cx="182" cy="34" r="13" fill="#f3e9d8" opacity=".9"/><circle cx="187" cy="30" r="12" fill="#0b0805"/>
+    <g fill="#f3e9d8"><circle cx="30" cy="22" r="1.2"/><circle cx="64" cy="40" r="1"/><circle cx="140" cy="18" r="1.3"/><circle cx="110" cy="30" r=".9"/><circle cx="206" cy="70" r="1"/></g>
+    <path d="M18 98 L110 50 L202 98Z" fill="#cdb990" stroke="#8f7c55" stroke-width="2" stroke-linejoin="round"/>
+    <g transform="translate(110 80)" stroke="#5a4430" stroke-width="2" fill="none" stroke-linecap="round"><path d="M0 -14 V8 M-14 -8 H14"/><path d="M-14 -8 L-20 2 H-8 Z M14 -8 L8 2 H20 Z" fill="#5a4430"/></g>
+    <rect x="24" y="98" width="172" height="11" fill="#b8a47a"/>
+    <g fill="#ffcf6e" class="af-win"><rect x="50" y="122" width="16" height="70"/><rect x="82" y="122" width="16" height="70"/><rect x="122" y="122" width="16" height="70"/><rect x="154" y="122" width="16" height="70"/></g>
+    <rect x="102" y="140" width="16" height="52" fill="#3a2414"/><rect x="102" y="140" width="16" height="52" fill="#ffcf6e" opacity=".35"/>
+    <g fill="#e2d3ae">${[32,66,98,140,174].map(x=>`<rect x="${x}" y="109" width="14" height="96"/><rect x="${x-2}" y="109" width="18" height="5"/>`).join("")}</g>
+    <rect x="22" y="205" width="176" height="8" fill="#b8a47a"/><rect x="14" y="213" width="192" height="8" fill="#a8956c"/><rect x="6" y="221" width="208" height="8" fill="#958359"/>
+    <ellipse cx="110" cy="240" rx="100" ry="7" fill="#000" opacity=".5"/>
+  </svg>`;
+}
+function afBenchFrame(){
+  return `<svg viewBox="0 0 220 250" role="img" aria-label="A judge in black robes behind a tall wooden bench, raising a gavel">
+    <rect x="0" y="0" width="220" height="250" fill="#2a1a0e" opacity=".0"/>
+    <g fill="#3a2414">${[10,62,114,166].map(x=>`<rect x="${x}" y="14" width="44" height="96" rx="3" stroke="#4d321c" stroke-width="2"/>`).join("")}</g>
+    <circle cx="110" cy="40" r="18" fill="#c9a24a" stroke="#8a6a24" stroke-width="3"/><path d="M110 28 V50 M100 34 H120" stroke="#5a4012" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M76 140 Q80 102 110 98 Q140 102 144 140Z" fill="#14161c"/><path d="M102 100 L110 116 L118 100Z" fill="#f4f1ea"/>
+    <circle cx="110" cy="82" r="17" fill="#c9966d"/><path d="M93 78 Q94 62 110 62 Q126 62 127 78 Q122 70 110 70 Q98 70 93 78Z" fill="#dcdcdc"/>
+    <path d="M102 84 h5 M113 84 h5" stroke="#1a1207" stroke-width="2" stroke-linecap="round"/><path d="M104 92 Q110 95 116 92" stroke="#7a4a32" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <g class="af-gavel"><rect x="150" y="96" width="34" height="16" rx="4" fill="#7a4a24" stroke="#4d2e14" stroke-width="2"/><rect x="164" y="110" width="6" height="34" rx="3" fill="#8a5a2c"/></g>
+    <rect x="20" y="132" width="180" height="92" rx="4" fill="#6b4425" stroke="#4d2e14" stroke-width="3"/>
+    <rect x="34" y="146" width="152" height="64" rx="3" fill="none" stroke="#8a5a34" stroke-width="2"/>
+    <rect x="150" y="124" width="36" height="9" rx="2" fill="#4d2e14"/>
+    <ellipse cx="110" cy="240" rx="96" ry="7" fill="#000" opacity=".5"/>
+  </svg>`;
+}
+function afFighterFrame(){
+  const id=C_ORDER.find(courtFighterOk);
+  if(id==="pappeshwar") return pappeshwarFigure();
+  if(id==="aryan") return aryanFigure();
+  if(id==="aakriti") return aakritiFigure();
+  return `<svg viewBox="0 0 220 250" role="img" aria-label="A detective in shadow standing in the courtroom doorway">
+    <rect x="58" y="20" width="104" height="224" rx="6" fill="#ffcf6e" opacity=".22"/>
+    <path d="M70 244 Q74 160 110 152 Q146 160 150 244Z" fill="#050403"/><circle cx="110" cy="118" r="30" fill="#050403"/>
+    <path d="M74 104 Q110 70 146 104 L150 108 L70 108Z" fill="#050403"/>
+  </svg>`;
+}
+function afObjectionFrame(){
+  return `<svg viewBox="0 0 220 250" role="img" aria-label="A hand pointing forward inside a bright burst with the word Objection">
+    <g class="af-burst"><path d="M110 18 L126 62 L170 40 L152 84 L204 92 L160 118 L196 154 L148 148 L152 198 L118 166 L98 210 L86 164 L40 186 L62 142 L14 128 L58 104 L24 66 L72 74 L70 26 L96 60Z" fill="#ffd23f" stroke="#7a1a0c" stroke-width="5" stroke-linejoin="round"/></g>
+    <text x="110" y="124" text-anchor="middle" font-family="Anton,Impact,'Arial Narrow',sans-serif" font-size="30" textLength="150" lengthAdjust="spacingAndGlyphs" fill="#fff" stroke="#7a1a0c" stroke-width="4" paint-order="stroke" stroke-linejoin="round" transform="rotate(-8 110 118)">OBJECTION!</text>
+    <path d="M4 238 L60 206 L74 226 L18 250Z" fill="#14161c"/><path d="M60 206 Q84 196 104 204 L150 196 Q160 196 158 204 L112 214 Q104 228 84 230 L74 226Z" fill="#c9966d" stroke="#7a4a32" stroke-width="2"/>
+  </svg>`;
+}
+const AF_SCENE = {
+  style:null, cls:"courtcut", label:"AttorneyFighter opening", figure:afCourthouseFrame,
+  tag:"Sub-game unlocked", title:"AttorneyFighter",
+  desc:"Courtroom battles for your DLC characters. Knock down every claim with the right evidence, object at the right moment, and win all three trials.",
+  btn:"Enter the courtroom",
+  lines:[
+    {t:"Code accepted. Case file AF-01 is now open.", fig:true},
+    {t:"Midnight. Court Hall 7 is called to order for a special night session.", frame:afBenchFrame},
+    {t:"The prosecution has never lost in this room. The defence chair is empty."},
+    {t:"Then the doors swing open, and your detective walks in to take the defence chair.", frame:afFighterFrame},
+    {t:"OBJECTION!", frame:afObjectionFrame, big:true},
+    {t:"The interview room was only practice. Court is now in session."}
+  ]
+};
+function playCourtOpening(first){ AF_SCENE.onDone=()=>openCourt(first); playCutscene(AF_SCENE); }
 $("courtExit").onclick=closeCourt;
+$("courtReplay").onclick=()=>{ closeCourt(); playCourtOpening(false); };
 $("cEndMenu").onclick=()=>courtMenu("");
 
 $("openDlc").onclick=openDlc;
