@@ -1581,7 +1581,10 @@ function renderCases(){
   if(sixDone("lastalibi")) bits.push(`<span class="p-chip" style="border-color:#ffd23f">${goldMini(22)} Gold File · broke The Last Alibi</span>`);
   $("progress").innerHTML = bits.join("<br>");
   const g=$("caseGrid"); g.innerHTML="";
-  CASES.forEach(c=>{
+  // Show files easiest first (1-star at the top, then 2, 3 ... 6); special files go at the very bottom.
+  const ordered=CASES.map((c,i)=>({c,i})).sort((a,b)=>
+    ((a.c.special?1:0)-(b.c.special?1:0)) || (a.c.diff-b.c.diff) || (a.i-b.i)).map(x=>x.c);
+  ordered.forEach(c=>{
     const b=document.createElement("button"); b.className="file"+(c.special?(c.diff>=7?" special seven":" special"):c.diff===5?" master":c.diff>=6?" legend":""); b.type="button";
     const st=solved[c.id];
     b.innerHTML=`<span class="no">${esc(c.no)}${c.special?` · <span class="lvl">Special · ${c.diff}-star file${c.immune?" · partner-proof":""}</span>`:c.diff===5?' · <span class="lvl">5-star file</span>':c.diff>=6?` · <span class="lvl">${c.diff}-star file · partner-proof</span>`:""}</span><h3>${esc(c.title)}</h3><p>${esc(c.hook)}</p>
