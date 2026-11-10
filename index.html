@@ -376,6 +376,56 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 .file.legend .stamp{color:#ff7a5c;border-color:#ff7a5c}
 .file.legend .stamp.solved{color:#8fe0ae;border-color:#8fe0ae}
 .file .rules{font-family:var(--f-body);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#ff9a7f}
+/* AttorneyFighter courtroom sub-game */
+.court{position:fixed;inset:0;z-index:30;overflow-y:auto;background:radial-gradient(ellipse 70% 45% at 50% 0%,rgba(255,196,120,.16),transparent 70%),linear-gradient(180deg,#2b1d12,#120b07 70%);color:#f3e9d8}
+.court-in{max-width:780px;margin:0 auto;padding:max(18px,env(safe-area-inset-top,0px)) 16px 40px}
+.court-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.court-top h2{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,7vw,44px);margin:0;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.court-top h2 span{color:#ffcf6e}
+.court .sub{color:#c9b89c;margin:0 0 14px}
+.court-h{font-family:var(--f-body);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#d8c4a2;margin:18px 0 8px}
+.court-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.c-card{display:flex;gap:10px;align-items:flex-start;text-align:left;background:rgba(0,0,0,.32);border:1px solid #5a4430;border-radius:12px;padding:12px;color:inherit}
+.c-card:hover:not(:disabled){border-color:#ffcf6e}
+.c-card.on{border-color:#ffcf6e;box-shadow:0 0 0 2px #ffcf6e inset,0 0 18px rgba(255,207,110,.25)}
+.c-card:disabled{opacity:.45;cursor:not-allowed}
+.c-card b{display:block;font-size:15px}.c-card small{display:block;color:#c9b89c;font-size:12.5px;line-height:1.4}
+.c-card .won{color:var(--ok);font-weight:700}
+.c-note{min-height:1.3em;font-weight:600;font-size:13.5px;color:#ffcf6e;margin:10px 0 0}
+.c-note.bad{color:#ffb4a3}
+.c-side{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.3);border:1px solid #5a4430;border-radius:12px;padding:10px 12px}
+.c-side .who{flex:1;min-width:0}.c-side .who b{font-size:15px}.c-side .who small{color:#c9b89c;display:block;font-size:12.5px}
+.c-bar{height:11px;background:rgba(0,0,0,.5);border-radius:6px;overflow:hidden;margin-top:6px}
+.c-bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#6fb38a,#9fe0b6);transition:width .45s}
+.c-bar.rival i{background:linear-gradient(90deg,#de5a3f,#ff9a7f)}
+.c-bar.mom i{background:linear-gradient(90deg,#c58a1c,#ffd23f)}
+.c-bar.mom.full i{box-shadow:0 0 10px #ffd23f}
+.c-num{font-size:12px;color:#d8c4a2;font-variant-numeric:tabular-nums}
+.c-claim{margin:12px 0 6px;background:#efe3c6;color:#2b2418;border-radius:12px;padding:12px 14px;font-family:var(--f-type);font-size:15.5px;position:relative}
+.c-claim small{display:block;font-family:var(--f-body);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7a6440;margin-bottom:3px}
+.c-intent{font-size:13.5px;color:#ffcf6e;margin:0 0 8px;min-height:1.3em}
+.c-log{background:rgba(0,0,0,.28);border-radius:10px;padding:8px 12px;font-size:13.5px;min-height:96px;margin-bottom:12px}
+.c-log p{margin:3px 0}.c-log .good{color:#9fe0b6}.c-log .bad{color:#ffb4a3}.c-log .gold{color:#ffd23f}
+.c-acts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.c-acts .btn{padding:11px 6px;font-size:14px;background:#3a2a1b;border-color:#6b5136;color:#f3e9d8}
+.c-acts .btn small{display:block;font-weight:500;font-size:11px;color:#c9b89c}
+.c-acts .btn.sp{background:linear-gradient(160deg,#5a4210,#2b1f08);border-color:#ffd23f}
+@media (max-width:520px){.c-acts{grid-template-columns:repeat(2,1fr)}}
+.c-ev{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:10px}
+.c-ev button{text-align:left;background:#efe3c6;color:#2b2418;border:0;border-radius:10px;padding:10px 12px}
+.c-ev button b{display:block;font-size:14px}.c-ev button small{font-size:12.5px;line-height:1.35;display:block}
+.c-ev button:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.c-ev button:hover:not(:disabled){outline:2px solid #ffcf6e}
+.c-end{text-align:center;padding:30px 10px}
+.c-end h3{font-family:var(--f-display);font-weight:400;font-size:clamp(38px,9vw,64px);margin:6px 0;text-transform:uppercase}
+.c-end .row-end{justify-content:center;display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.c-flash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:31}
+.c-flash span{font-family:var(--f-display);font-size:clamp(54px,14vw,128px);color:#fff;letter-spacing:.02em;text-transform:uppercase;
+  -webkit-text-stroke:3px #7a1a0c;text-shadow:0 6px 0 #7a1a0c,0 0 40px rgba(255,90,60,.8);animation:cFlash 1s ease-out forwards}
+.c-flash.gold span{-webkit-text-stroke-color:#6b4c00;text-shadow:0 6px 0 #6b4c00,0 0 40px rgba(255,210,63,.9)}
+@keyframes cFlash{0%{transform:scale(2.2) rotate(-8deg);opacity:0}18%{transform:scale(1) rotate(-6deg);opacity:1}75%{opacity:1}100%{transform:scale(1.05) rotate(-6deg);opacity:0}}
+.court .hit{animation:shake .4s}
+.dlc-item.court-item{border-color:#ffcf6e}
 </style>
 </head>
 <body>
@@ -512,6 +562,41 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
       <button class="btn primary" id="endCases">Back to cases</button>
     </div>
   </div>
+</div>
+
+<div class="court" id="court" hidden role="dialog" aria-modal="true" aria-labelledby="courtTitle">
+  <div class="court-in">
+    <header class="court-top"><h2 id="courtTitle">Attorney<span>Fighter</span></h2><button type="button" class="btn ghost" id="courtExit">Leave court</button></header>
+    <section id="courtMenu">
+      <p class="sub">Your DLC detectives trade the interview room for the courtroom. Knock down each claim the rival lawyer makes with the right evidence, object when they lead the witness, and unleash your special when momentum is full.</p>
+      <h3 class="court-h">Choose your attorney</h3>
+      <div class="court-grid" id="courtFighters"></div>
+      <h3 class="court-h">Choose a trial</h3>
+      <div class="court-grid" id="courtTrials"></div>
+      <p class="c-note" id="courtNote" aria-live="polite"></p>
+    </section>
+    <section id="courtBattle" hidden>
+      <div class="c-side" id="cRivalBox"><span id="cRivalIcon"></span><div class="who"><b id="cRivalName"></b><small id="cRivalRole"></small><div class="c-bar rival"><i id="cRivalBar"></i></div></div><span class="c-num" id="cRivalNum"></span></div>
+      <div class="c-claim"><small id="cClaimTag">The prosecution claims</small><span id="cClaim"></span></div>
+      <p class="c-intent" id="cIntent"></p>
+      <div class="c-log" id="cLog" aria-live="polite"></div>
+      <div class="c-side" id="cMeBox"><span id="cMeIcon"></span><div class="who"><b id="cMeName"></b><small>Credibility</small><div class="c-bar"><i id="cMeBar"></i></div><small style="margin-top:6px">Momentum</small><div class="c-bar mom" id="cMomWrap"><i id="cMomBar"></i></div></div><span class="c-num" id="cMeNum"></span></div>
+      <div class="c-acts">
+        <button type="button" class="btn" id="cArgue">Argue<small>Steady damage</small></button>
+        <button type="button" class="btn" id="cPresent">Present<small>Pick evidence</small></button>
+        <button type="button" class="btn" id="cObject">Object!<small>Block a leading question</small></button>
+        <button type="button" class="btn sp" id="cSpecial">Special<small id="cSpecialName"></small></button>
+      </div>
+      <div class="c-ev" id="cEv" hidden></div>
+    </section>
+    <section id="courtEnd" class="c-end" hidden>
+      <span class="cut-tag" id="cEndTag"></span>
+      <h3 id="cEndTitle"></h3>
+      <p class="sub" id="cEndText"></p>
+      <div class="row-end"><button type="button" class="btn" id="cEndRetry">Retry trial</button><button type="button" class="btn primary" id="cEndMenu">Back to the courtroom</button></div>
+    </section>
+  </div>
+  <div class="c-flash" id="cFlash" hidden><span id="cFlashText"></span></div>
 </div>
 
 <script>
@@ -2234,6 +2319,10 @@ function renderDlc(){
   if(aakritiUnlocked() && !aakHidden()){
     list.innerHTML+=`<div class="dlc-item myth">${aakritiSVG(30)}<div><b>Aakriti</b><small>Mythic. Pick her under Customize.</small></div></div>`;
   }
+  if(courtUnlocked()){
+    list.innerHTML+=`<div class="dlc-item court-item"><span style="font-size:24px" aria-hidden="true">⚖️</span><div style="flex:1"><b>AttorneyFighter</b><small>Courtroom battles for your DLC characters.</small></div><button type="button" class="btn primary" id="dlcCourt">Enter court</button></div>`;
+    $("dlcCourt").onclick=()=>{ $("dlcOverlay").hidden=true; openCourt(false); };
+  }
 }
 function openDlc(){ $("dlcInput").value=""; $("dlcMsg").textContent=""; $("dlcMsg").className="dlc-msg"; renderDlc(); $("dlcOverlay").hidden=false; $("dlcInput").focus(); }
 function enc(v){ try{ return btoa(unescape(encodeURIComponent(v))); }catch(e){ return ""; } }
@@ -2241,6 +2330,10 @@ $("dlcForm").addEventListener("submit",e=>{
   e.preventDefault();
   const v=$("dlcInput").value.trim().toLowerCase(), msg=$("dlcMsg"), inp=$("dlcInput");
   if(!v) return;
+  if(enc(v)===COURT_CODE){
+    const first=!courtUnlocked(); store.set("r7.court",true);
+    $("dlcOverlay").hidden=true; openCourt(first); return;
+  }
   if(enc(v)===PAP_SHOW){
     if(!pappeshwarUnlocked()){ msg.textContent="Unlock Pappeshwar with his DLC code first."; msg.className="dlc-msg bad"; return; }
     if(!papHidden()){ msg.textContent="Pappeshwar is already showing under Customize."; msg.className="dlc-msg good"; return; }
@@ -2280,6 +2373,275 @@ $("dlcForm").addEventListener("submit",e=>{
     inp.classList.remove("shake"); void inp.offsetWidth; inp.classList.add("shake");
   }
 });
+// ---------- AttorneyFighter courtroom sub-game ----------
+const COURT_CODE = "YXR0b3JuZXlmaWdodGVy";
+function courtUnlocked(){ return !!store.get("r7.court",false); }
+const C_FIGHTERS = {
+  pappeshwar:{name:"Pappeshwar",tier:"Godlike",passive:"Sees through everyone: the rival's next move is always shown truthfully, with exact numbers.",special:"I Already Know",specialDesc:"Knocks down the current claim with no evidence needed. 40 damage, and the rival loses their move."},
+  aryan:{name:"Aryan",tier:"Mythic",passive:"Unshakeable: takes 30% less damage from every hit.",special:"Dead Silence",specialDesc:"28 damage. The room goes so quiet the rival loses their next two moves."},
+  aakriti:{name:"Aakriti",tier:"Mythic",passive:"Every argument lands a joke: Argue hits 6 harder.",special:"Courtroom Laughter",specialDesc:"30 damage, the rival loses their move, and you win back 20 credibility."}
+};
+const C_ORDER = ["pappeshwar","aryan","aakriti"];
+const C_TRIALS = [
+  {id:"pickle", title:"The Pickle Jar Affair", level:"Trial 1 · Easy",
+   rival:{name:"Gopal Rao",role:"Junior public prosecutor",color:"#6b9be0"}, hp:90, mult:0.8, heavy:0.2, heal:0.15,
+   intro:"Raju is accused of stealing Kamala Aunty's famous avakaya pickle from her stall at the Sunday mela.",
+   claims:[
+     {t:"The defendant was at Kamala's stall at 7 p.m., when the jar vanished.",ev:"e1"},
+     {t:"His fingerprints are on the stolen jar's lid.",ev:"e2"},
+     {t:"A witness clearly saw him running off with a red jar.",ev:"e3"},
+     {t:"He has always been jealous of Kamala's pickle.",ev:"e4"}],
+   evidence:[
+     {id:"e1",name:"Bus ticket",text:"Raju's ticket, stamped 6:52 p.m. at Secunderabad, 40 minutes from the mela."},
+     {id:"e2",name:"Lab report",text:"The prints on the lid are too smudged to match anyone."},
+     {id:"e3",name:"Optician's receipt",text:"The witness left her glasses for repair that morning and collected them on Monday."},
+     {id:"e4",name:"Prize certificate",text:"Raju's own pickle beat Kamala's at the mela three years running."},
+     {id:"e5",name:"Mela poster",text:"The Sunday mela runs from 4 p.m. to 9 p.m."}],
+   win:"Not guilty. Kamala Aunty finds the jar behind her own stall and sends Raju a box of laddoos."},
+  {id:"clock", title:"The Stopped Clock", level:"Trial 2 · Medium",
+   rival:{name:"Nandini Mehra",role:"Senior prosecutor. Never loses her cool",color:"#b98ae0"}, hp:110, mult:1.0, heavy:0.3, heal:0.2,
+   intro:"Watch repairer Imran is accused of stealing a 200-year-old clock from a heritage hotel in the Old City.",
+   claims:[
+     {t:"The defendant was the only person with a key to the display room.",ev:"e1"},
+     {t:"CCTV shows him leaving the hotel at midnight in a grey jacket.",ev:"e2"},
+     {t:"The clock was found wrapped in cloth from his shop.",ev:"e3"},
+     {t:"He was desperate for money to pay off a loan.",ev:"e4"}],
+   evidence:[
+     {id:"e1",name:"Key register",text:"Three keys were issued. The night manager signed one out at 11 p.m."},
+     {id:"e2",name:"Shop photo",text:"A customer's photo shows Imran at his own shop counter at 11:58 p.m., in a blue sweater."},
+     {id:"e3",name:"Cloth supplier's bill",text:"The same cloth is sold to 40 shops in the Old City, including the hotel's own gift shop."},
+     {id:"e4",name:"Bank letter",text:"Imran's loan was fully repaid two months before the theft."},
+     {id:"e5",name:"Weather report",text:"Light rain fell over the Old City from 10 p.m."}],
+   win:"Not guilty. The night manager is arrested at the airport with the clock in his suitcase."},
+  {id:"falcon", title:"The Falcon Diamond", level:"Trial 3 · Hard",
+   rival:{name:"Vikram Saxena",role:"The Silver Tongue. Undefeated in 212 trials",color:"#de5a3f"}, hp:140, mult:1.1, heavy:0.4, heal:0.25,
+   intro:"Designer Meera is accused of swapping the Falcon Diamond for a fake during a fashion show.",
+   claims:[
+     {t:"Only the defendant handled the diamond backstage.",ev:"e1"},
+     {t:"The fake was designed with her software.",ev:"e2"},
+     {t:"She booked a flight to Dubai for the very next morning.",ev:"e3"},
+     {t:"A jeweller swears she collected a lab-grown copy of the stone.",ev:"e4"},
+     {t:"Her fingerprints are all over the display case.",ev:"e5"}],
+   evidence:[
+     {id:"e1",name:"Backstage log",text:"The insurer's agent, R. Kapoor, signed for the diamond at 8:40 p.m., after Meera had left the stage."},
+     {id:"e2",name:"Software audit",text:"The fake's design file was made on a laptop registered to R. Kapoor."},
+     {id:"e3",name:"Fair invitation",text:"The Dubai trip is a jewellery fair, booked six months ago and paid for by the organisers."},
+     {id:"e4",name:"Jeweller's ledger",text:"The copy was collected and signed for by 'R. Kapoor', paid in cash."},
+     {id:"e5",name:"Show schedule",text:"Meera set up the display case at noon for the rehearsal, as listed in the official schedule."},
+     {id:"e6",name:"VIP pass",text:"A front-row pass for row A, seat 4."}],
+   win:"Not guilty. The Silver Tongue loses his first trial ever, and R. Kapoor is taken away in handcuffs."}
+];
+function courtWins(){ return store.get("r7.courtWins",{}); }
+function courtFighterOk(id){ const s=STYLES.find(x=>x.id===id); return !!(s && styleUnlocked(s)); }
+function rivalSVG(color,size){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="17" fill="${color}"/><path d="M6 36 Q18 22 30 36Z" fill="#14161c"/><path d="M16 27 L18 33 L20 27Z" fill="#f4f1ea"/><circle cx="18" cy="15" r="7" fill="#c9966d"/><path d="M11 13 Q12 6 18 7 Q24 6 25 13 Q22 10 18 10 Q14 10 11 13Z" fill="#2a1f1a"/><path d="M14 16 h3 M19 16 h3" stroke="#1a1207" stroke-width="1.4" stroke-linecap="round"/></svg>`;
+}
+let CT = null;               // current trial state
+let courtPick = store.get("r7.courtFighter",null);
+let courtTimer = null;
+
+function openCourt(first){
+  $("court").hidden=false; document.body.style.overflow="hidden";
+  courtMenu(first ? "Courtroom unlocked. Welcome to AttorneyFighter." : "");
+}
+function closeCourt(){ clearTimeout(courtTimer); CT=null; $("court").hidden=true; $("cFlash").hidden=true; document.body.style.overflow=""; }
+function courtShow(id){ ["courtMenu","courtBattle","courtEnd"].forEach(x=>$(x).hidden = x!==id); $("court").scrollTop=0; }
+
+function courtMenu(note){
+  clearTimeout(courtTimer); CT=null; courtShow("courtMenu");
+  const avail=C_ORDER.filter(courtFighterOk);
+  if(!avail.includes(courtPick)) courtPick = avail[0] || null;
+  const fg=$("courtFighters"); fg.innerHTML="";
+  C_ORDER.forEach(id=>{
+    const f=C_FIGHTERS[id], ok=avail.includes(id), b=document.createElement("button");
+    b.type="button"; b.className="c-card"+(courtPick===id?" on":""); b.disabled=!ok;
+    b.innerHTML=`${partnerIcon(id,48)}<div><b>${esc(f.name)}</b><small>${ok?`${esc(f.tier)} · ${esc(f.passive)}`:"Locked · unlock this DLC character with their code first"}</small>${ok?`<small style="margin-top:4px"><b style="display:inline;font-size:12.5px;color:#ffd23f">${esc(f.special)}:</b> ${esc(f.specialDesc)}</small>`:""}</div>`;
+    if(ok) b.onclick=()=>{ courtPick=id; store.set("r7.courtFighter",id); courtMenu(""); };
+    fg.appendChild(b);
+  });
+  const wins=courtWins(), tg=$("courtTrials"); tg.innerHTML="";
+  C_TRIALS.forEach((t,i)=>{
+    const open = i===0 || wins[C_TRIALS[i-1].id], b=document.createElement("button");
+    b.type="button"; b.className="c-card"; b.disabled=!open || !courtPick;
+    b.innerHTML=`${rivalSVG(t.rival.color,48)}<div><b>${esc(t.title)}</b><small>${esc(t.level)} · vs ${esc(t.rival.name)}</small><small>${open?esc(t.intro):"Locked · win the previous trial first"}</small>${wins[t.id]?`<small class="won">Won with ${esc(C_FIGHTERS[wins[t.id]] ? C_FIGHTERS[wins[t.id]].name : "your attorney")}</small>`:""}</div>`;
+    if(open) b.onclick=()=>startTrial(i);
+    tg.appendChild(b);
+  });
+  const n=$("courtNote");
+  if(!avail.length){ n.textContent="You need at least one DLC character to fight. Unlock Pappeshwar, Aryan or Aakriti with their DLC code, then come back."; n.className="c-note bad"; }
+  else if(C_TRIALS.every(t=>wins[t.id])){ n.textContent=(note?note+" ":"")+"⚖️ Senior Advocate: you have won every trial. Replay any of them with a different attorney."; n.className="c-note"; }
+  else { n.textContent=note||""; n.className="c-note"; }
+}
+
+function cShuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function startTrial(i){
+  if(!courtPick || !courtFighterOk(courtPick)) return;
+  const t=C_TRIALS[i];
+  CT={i,t,f:courtPick,php:100,pmax:100,rhp:t.hp,rmax:t.hp,mom:0,queue:cShuffle(t.claims.map((_,k)=>k)),used:new Set(),stun:0,busy:false,over:false,log:[]};
+  CT.cur=CT.queue[0];
+  courtShow("courtBattle");
+  $("cRivalIcon").innerHTML=rivalSVG(t.rival.color,52); $("cRivalName").textContent=t.rival.name; $("cRivalRole").textContent=t.rival.role;
+  $("cMeIcon").innerHTML=partnerIcon(CT.f,52); $("cMeName").textContent=C_FIGHTERS[CT.f].name+" for the defence";
+  $("cSpecialName").textContent=C_FIGHTERS[CT.f].special;
+  $("cEv").hidden=true;
+  cLog(t.intro,"");
+  cLog(`${t.rival.name}: "The prosecution will prove its case, Your Honour."`,"");
+  cNewIntent(); cDraw();
+}
+function cLog(s,cls){ CT.log.push({s,cls}); if(CT.log.length>6) CT.log.shift(); $("cLog").innerHTML=CT.log.map(x=>`<p class="${x.cls}">${esc(x.s)}</p>`).join(""); }
+function cFlash(text,gold){ const f=$("cFlash"); $("cFlashText").textContent=text; f.className="c-flash"+(gold?" gold":""); f.hidden=false; const sp=$("cFlashText"); sp.style.animation="none"; void sp.offsetWidth; sp.style.animation=""; clearTimeout(cFlash.t); cFlash.t=setTimeout(()=>{f.hidden=true;},1000); }
+function cHit(id){ const el=$(id); el.classList.remove("hit"); void el.offsetWidth; el.classList.add("hit"); }
+function cRand(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+
+function cNewIntent(){
+  const t=CT.t, r=Math.random();
+  CT.intent = (CT.rhp < CT.rmax*0.6 && r < t.heal) ? "recompose" : (Math.random() < t.heavy ? "heavy" : "claim");
+  // Only Pappeshwar reads the rival perfectly; everyone else sees a tell that is sometimes a bluff.
+  CT.shown = CT.intent;
+  if(CT.f!=="pappeshwar" && Math.random()<0.25){ const o=["claim","heavy","recompose"].filter(x=>x!==CT.intent); CT.shown=o[Math.floor(Math.random()*o.length)]; }
+}
+function cDmg(kind){ return Math.round((kind==="heavy"?20:12)*CT.t.mult); }
+function cIntentText(){
+  const n=CT.t.rival.name.split(" ")[0];
+  if(CT.stun>0) return `${n} is still frozen by the silence.`;
+  if(CT.f==="pappeshwar"){
+    const d=cDmg(CT.intent), m={claim:`will press the claim for ${d} damage.`,heavy:`will lead the witness for ${d} damage. Object now!`,recompose:"will try to regain composure (+15)."};
+    return "Pappeshwar already knows: "+n+" "+m[CT.intent];
+  }
+  return {claim:`${n} is getting ready to press the claim.`,heavy:`${n} is leafing through notes, maybe a leading question…`,recompose:`${n} is straightening their papers.`}[CT.shown];
+}
+function cDraw(){
+  const t=CT.t;
+  $("cRivalBar").style.width=Math.max(0,CT.rhp/CT.rmax*100)+"%"; $("cRivalNum").textContent=Math.max(0,CT.rhp)+"/"+CT.rmax;
+  $("cMeBar").style.width=Math.max(0,CT.php/CT.pmax*100)+"%"; $("cMeNum").textContent=Math.max(0,CT.php)+"/"+CT.pmax;
+  $("cMomBar").style.width=Math.min(100,CT.mom)+"%"; $("cMomWrap").classList.toggle("full",CT.mom>=100);
+  const left=CT.queue.length;
+  $("cClaimTag").textContent=`The prosecution claims · ${left} claim${left===1?"":"s"} left to knock down`;
+  $("cClaim").textContent=t.claims[CT.cur].t;
+  $("cIntent").textContent=cIntentText();
+  const dis=CT.busy||CT.over;
+  ["cArgue","cPresent","cObject"].forEach(id=>$(id).disabled=dis);
+  $("cSpecial").disabled=dis||CT.mom<100;
+}
+
+function cRefute(how){
+  const t=CT.t, claim=t.claims[CT.cur];
+  CT.used.add(claim.ev);
+  CT.queue=CT.queue.filter(k=>k!==CT.cur);
+  if(!CT.queue.length){ CT.rhp=Math.min(CT.rhp,0); return; }
+  CT.cur=CT.queue[0];
+}
+function cAct(kind,arg){
+  if(!CT || CT.busy || CT.over) return;
+  const t=CT.t, me=C_FIGHTERS[CT.f].name, rn=t.rival.name; let skip=false;
+  $("cEv").hidden=true;
+  if(kind==="argue"){
+    const d=cRand(8,12)+(CT.f==="aakriti"?6:0);
+    CT.rhp-=d; CT.mom+=25; cHit("cRivalBox");
+    cLog(CT.f==="aakriti" ? `${me} argues the point with a joke that gets the whole gallery giggling. ${d} damage.` : `${me} picks apart the prosecution's logic. ${d} damage.`,"good");
+  }
+  if(kind==="present"){
+    const ev=t.evidence.find(e=>e.id===arg), claim=t.claims[CT.cur];
+    if(ev.id===claim.ev){
+      CT.rhp-=26; CT.mom+=35; cFlash("Objection!"); cHit("cRivalBox");
+      cLog(`${me} presents the ${ev.name}: "${ev.text}" The claim falls apart. 26 damage.`,"good");
+      cRefute();
+    } else {
+      CT.php-=10; CT.mom=Math.max(0,CT.mom-20); cHit("cMeBox");
+      cLog(`${me} presents the ${ev.name}, but it has nothing to do with that claim. The judge frowns. You lose 10 credibility.`,"bad");
+    }
+  }
+  if(kind==="object"){
+    if(CT.intent==="heavy" && CT.stun<=0){
+      CT.rhp-=15; CT.mom+=30; skip=true; cFlash("Sustained!"); cHit("cRivalBox");
+      cLog(`${me} objects just as ${rn} leads the witness. Sustained! The question is struck and it costs them 15.`,"good");
+    } else {
+      CT.php-=6; cHit("cMeBox");
+      cLog(`${me} objects, but there is nothing to object to. Overruled. You lose 6 credibility.`,"bad");
+    }
+  }
+  if(kind==="special"){
+    if(CT.mom<100) return;
+    CT.mom=0; skip=true;
+    if(CT.f==="pappeshwar"){
+      CT.rhp-=40; cFlash("I already know!",true);
+      cLog(`Pappeshwar explains exactly what really happened before ${rn} can finish the sentence. The claim collapses. 40 damage.`,"gold");
+      cRefute();
+    } else if(CT.f==="aryan"){
+      CT.rhp-=28; CT.stun=1; cFlash("Dead silence",true);
+      cLog(`Aryan stares at ${rn} without blinking. The courtroom goes completely silent. 28 damage, and they lose their next two moves.`,"gold");
+    } else {
+      CT.rhp-=30; CT.php=Math.min(CT.pmax,CT.php+20); cFlash("Ha! Ha! Ha!",true);
+      cLog(`Aakriti cracks a line so good that even the judge laughs. ${rn} can't recover. 30 damage, and you win back 20 credibility.`,"gold");
+    }
+    cHit("cRivalBox");
+  }
+  CT.mom=Math.min(100,CT.mom);
+  if(cCheck()) return;
+  CT.busy=true; cDraw();
+  courtTimer=setTimeout(()=>cRival(skip),850);
+}
+function cRival(skip){
+  if(!CT) return;
+  const t=CT.t, rn=t.rival.name;
+  if(skip){ cLog(`${rn} is thrown off and loses their move.`,""); }
+  else if(CT.stun>0){ CT.stun--; cLog(`${rn} is still frozen by the silence and says nothing.`,"gold"); }
+  else {
+    const kind=CT.intent;
+    if(kind==="recompose"){
+      const h=Math.min(15,CT.rmax-CT.rhp); CT.rhp+=h; cLog(`${rn} takes a breath and calmly restates the case. +${h} credibility for the prosecution.`,"bad");
+    } else {
+      let d=cDmg(kind); if(CT.f==="aryan") d=Math.round(d*0.7);
+      CT.php-=d; cHit("cMeBox");
+      cLog(kind==="heavy" ? `${rn} leads the witness into saying exactly what the prosecution wants. ${d} damage.` : `${rn} presses the claim hard: "${t.claims[CT.cur].t}" ${d} damage.`,"bad");
+    }
+  }
+  CT.busy=false;
+  if(cCheck()) return;
+  cNewIntent(); cDraw();
+}
+function cCheck(){
+  if(CT.rhp<=0 || !CT.queue.length){ CT.over=true; cDraw(); courtTimer=setTimeout(()=>cEnd(true),900); return true; }
+  if(CT.php<=0){ CT.over=true; cDraw(); courtTimer=setTimeout(()=>cEnd(false),900); return true; }
+  return false;
+}
+function cEnd(won){
+  const t=CT.t, me=C_FIGHTERS[CT.f].name; courtShow("courtEnd");
+  if(won){
+    const w=courtWins(), firstAll=!C_TRIALS.every(x=>w[x.id]); w[t.id]=CT.f; store.set("r7.courtWins",w);
+    const all=C_TRIALS.every(x=>w[x.id]);
+    cFlash("Not guilty!",true);
+    $("cEndTag").textContent=t.level+" · Case won";
+    $("cEndTitle").textContent="Not guilty!";
+    $("cEndText").textContent=t.win+(all&&firstAll?` ${me} is named Senior Advocate. Every trial is won.`:CT.i<C_TRIALS.length-1?" The next trial is now open.":"");
+  } else {
+    $("cEndTag").textContent=t.level+" · Case lost";
+    $("cEndTitle").textContent="Guilty";
+    $("cEndText").textContent=`${t.rival.name} wins this one. Read each claim carefully, match the evidence that proves it wrong, and object when they reach for a leading question.`;
+  }
+  const i=CT.i;
+  $("cEndRetry").onclick=()=>startTrial(i);
+}
+$("cArgue").onclick=()=>cAct("argue");
+$("cObject").onclick=()=>cAct("object");
+$("cSpecial").onclick=()=>cAct("special");
+$("cPresent").onclick=()=>{
+  if(!CT || CT.busy || CT.over) return;
+  const box=$("cEv");
+  if(!box.hidden){ box.hidden=true; return; }
+  box.innerHTML="";
+  CT.t.evidence.forEach(e=>{
+    const b=document.createElement("button"); b.type="button"; b.disabled=CT.used.has(e.id);
+    b.innerHTML=`<b>${esc(e.name)}</b><small>${esc(e.text)}</small>`;
+    b.onclick=()=>cAct("present",e.id);
+    box.appendChild(b);
+  });
+  box.hidden=false;
+  box.scrollIntoView({behavior:"smooth",block:"nearest"});
+};
+$("courtExit").onclick=closeCourt;
+$("cEndMenu").onclick=()=>courtMenu("");
+
 $("openDlc").onclick=openDlc;
 $("luClose").onclick=()=>{ $("lineupOverlay").hidden=true; LU=null; };
 $("dlcClose").onclick=()=>{$("dlcOverlay").hidden=true;};
